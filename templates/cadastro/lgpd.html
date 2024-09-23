@@ -1,35 +1,111 @@
-{% extends 'cadastro/base.html' %}
+{% extends 'comum/base.html' %}
 {% load static %}
 
 {% block content %}
-    <div>
-        <table>
-            
-            <h1>Formulário de Alteração Cadastral</h1>
-            <tr>
-                <td colspan="2">
-                    Em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018), a BBZ Administração de Condomínio reafirma seu compromisso com a segurança e confidencialidade dos seus dados pessoais.
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    Este formulário se destina à atualização cadastral, garantindo a precisão das informações que mantemos. Seus dados serão tratados com sigilo e não serão compartilhados sem sua autorização prévia.
-                </td>
-            </tr>
-            </tr>
-                <td colspan="2">
-                Ao continuar, você concorda expressamente com o uso dos seus dados pessoais pela BBZ Administração de Condominio para os fins especificados neste formulário e para as finalidades previstas na LGPD.
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <td><a href="{% url 'escolha_atualizacao' %}">Aceito</a></td>>
-                </td>
-                <td>
-                    <input type="button" value="Não Aceito" />
-                </td>
-            </tr>
-        </table>
-    </div>
-    
+<!--begin::Theme mode setup on page load-->
+<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+<script>
+    $('#kt_docs_maxlength_basic').maxlength({
+        warningClass: "badge badge-warning",
+        limitReachedClass: "badge badge-success"
+    });    
+</script>
+<!--end::Theme mode setup on page load-->
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Authentication - Sign-in -->
+    <div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url({% static 'assets/imagem/illustrations/sigma-1/14.png' %})">
+        <!--begin::Content-->
+        <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
+            <!--begin::Logo-->
+            <a href="" class="mb-12">
+                <img alt="Logo" src="{% static 'assets/LOGO_BBZ_VERDE.png' %}" class="h-60px" />
+            </a>
+            <!--end::Logo-->
+            <!--begin::Wrapper-->
+            <div class="w-lg-w-lg-900px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+                <!--begin::Form-->
+                <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="index.html" action="post">
+                    <!--begin::Heading-->
+                    <div class="text-center mb-10">
+                        <!--begin::Title-->
+                        <h1 class="text-gray-900 mb-3">BBZ Home</h1>
+                        <!--end::Title-->
+                        <!--begin::Link-->
+                        <div class="text-gray-500 fw-semibold fs-4">
+                        <!--end::Link-->
+                    </div>
+                    <div><br /></div>
+                    <!--begin::Heading-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-10">
+                        
+                        <div id="kt_carousel_3_carousel" class="carousel carousel-custom slide" data-bs-ride="carousel" data-bs-interval="8000">
+                            <!--begin::Heading-->
+                            <div class="d-flex align-items-center justify-content-between flex-wrap">
+                                <!--begin::Label-->
+                                <span class="fs-4 fw-bold pe-2">Atualização Cadastral</span>
+                                <!--end::Label-->
+
+                                <!--begin::Carousel Indicators-->
+                                <ol class="p-0 m-0 carousel-indicators carousel-indicators-bullet carousel-indicators-active-primary">
+                                    <li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="0" class="ms-1 active"></li>
+                                    <li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="1" class="ms-1"></li>
+                                    <li data-bs-target="#kt_carousel_3_carousel" data-bs-slide-to="2" class="ms-1"></li>
+                                </ol>
+                                <!--end::Carousel Indicators-->
+                            </div>
+                            <!--end::Heading-->
+
+                            <!--begin::Carousel-->
+                            <div class="carousel-inner pt-8">
+                                <!--begin::Item-->
+                                <div class="carousel-item active">
+                                    <h2>Serão solicitadas as seguintes informações, as quais são obrigatórias:</h1>
+                                        <ol>
+                                            <li>Nome do responsável atual,(proprietário ou locatário).</li>
+                                            <li>Documento do responsável atual, (RG/CNH/CNPJ).</li>
+                                            <li>Endereço do condomínio.</li>
+                                            <li>Unidade.</li>
+                                            <li>Novos dados de contato (telefone/e-mail/endereço de cobrança)</li>
+                                        </ol>
+
+                                        OBS.: Essa funcionalidade, serve apenas para atualizar os dados do proprietário ou locatário atual.
+
+                                </div>
+                                <!--end::Item-->
+
+                                <!--begin::Item-->
+                                <div class="carousel-item">
+                                    <label class="form-label">Nome do proprietário</label>
+                                    <input type="text" class="form-control" id="kt_docs_maxlength_basic" maxlength="10" />
+                                    <span class="fs-6 text-muted">...</span>
+                                </div>
+                                <!--end::Item-->
+
+                                <!--begin::Item-->
+                                <div class="carousel-item">
+                                    item 3
+                                </div>
+                                <!--end::Item-->
+                            </div>
+                            <!--end::Carousel-->
+                        </div>
+
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Input group-->
+                    <div class="fv-row mb-10">
+                    </div>
+                    <!--end::Input group-->
+                    <!--begin::Actions-->
+                    <div class="text-center">
+                    </div>
+                    <!--end::Actions-->
+                </form>
+                <!--end::Form-->
+            </div>
+            <!--end::Wrapper-->
+        </div>
+        <!--end::Content-->
 {% endblock %}
