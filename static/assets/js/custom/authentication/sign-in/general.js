@@ -14,21 +14,14 @@ var KTSigninGeneral = function () {
             form,
             {
                 fields: {
-                    'email': {
+                    'cpf': {
                         validators: {
                             regexp: {
-                                regexp: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                                message: 'The value is not a valid email address',
+                                regexp: /(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/,
+                                message: 'O campo CPF/CNPJ não é válido.',
                             },
                             notEmpty: {
-                                message: 'Email address is required'
-                            }
-                        }
-                    },
-                    'password': {
-                        validators: {
-                            notEmpty: {
-                                message: 'The password is required'
+                                message: 'O campo CPF/CNPJ é obrigatório.'
                             }
                         }
                     }
@@ -71,16 +64,16 @@ var KTSigninGeneral = function () {
 
                         // Show message popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                         Swal.fire({
-                            text: "You have successfully logged in!",
+                            text: "Agora basta escolher e digitar um dos E-Mails cadastrados!",
                             icon: "success",
                             buttonsStyling: false,
-                            confirmButtonText: "Ok, got it!",
+                            confirmButtonText: "OK, eu entendi!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
                         }).then(function (result) {
                             if (result.isConfirmed) {
-                                form.querySelector('[name="email"]').value = "";
+                                form.querySelector('[name="cpf"]').value = "";
                                 form.querySelector('[name="password"]').value = "";
 
                                 //form.submit(); // submit form
@@ -94,10 +87,10 @@ var KTSigninGeneral = function () {
                 } else {
                     // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                     Swal.fire({
-                        text: "Sorry, looks like there are some errors detected, please try again.",
+                        text: "Desculpe, parece que alguma coisa foi digitada errada.",
                         icon: "error",
                         buttonsStyling: false,
-                        confirmButtonText: "Ok, got it!",
+                        confirmButtonText: "Ok, eu entendi!",
                         customClass: {
                             confirmButton: "btn btn-primary"
                         }
@@ -146,7 +139,7 @@ var KTSigninGeneral = function () {
                         } else {
                             // Show error popup. For more info check the plugin's official documentation: https://sweetalert2.github.io/
                             Swal.fire({
-                                text: "Sorry, the email or password is incorrect, please try again.",
+                                text: "Sorry, the cpf or password is incorrect, please try again.",
                                 icon: "error",
                                 buttonsStyling: false,
                                 confirmButtonText: "Ok, got it!",
