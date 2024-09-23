@@ -1,0 +1,25 @@
+{% load static %}
+<!--begin::Footer-->
+<div class="d-flex flex-center flex-column-auto p-10">
+    <!--begin::Links-->
+    <div class="d-flex align-items-center fw-semibold fs-6">
+        <a href="" class="text-muted text-hover-primary px-2">About</a>
+        <a href="" class="text-muted text-hover-primary px-2">Support</a>
+    </div>
+    <!--end::Links-->
+</div>
+<!--end::Footer-->
+</div>
+<!--end::Authentication - Sign-in-->
+</div>
+<!--end::Main-->
+<!--begin::Javascript-->
+<script>var hostUrl = "assets/";</script>
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static 'assets/js/scripts.bundle.js' %}"></script>
+<!--end::Global Javascript Bundle-->
+<!--begin::Custom Javascript(used for this page only)-->
+<script src="{% static 'assets/js/custom/authentication/sign-in/general.js' %}"></script>
+<!--end::Custom Javascript-->
+<!--end::Javascript-->
