@@ -1,0 +1,82 @@
+{% extends 'comum/base.html' %}
+{% load static %}
+
+{% block content %}
+                    <script src="assets/plugins/global/plugins.bundle.js"></script>
+
+                    <div class="table-responsive">
+                        <table class="table gs-7 gy-7 gx-7">
+                            <table class="table gs-7 gy-7 gx-7">
+                                <h2>Formulário de Alteração Cadastral</h2><br />
+                                <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+                                    <input class="form-check-input " type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
+                                    <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+                                        Proprietário
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+                                    <input class="form-check-input " type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
+                                    <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+                                        Locatário
+                                    </label>
+                                </div>
+                                <br />
+                                <!--begin::Input group NOME-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Nome</label>
+                                </div>
+                                <!--end::Input group  NOME-->
+                                
+                                <!--begin::Input group EMAIL-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <label for="floatingInput">E-mail</label>
+                                </div>
+                                <!--end::Input group EMAIL-->
+
+                                <!--begin::Input group CEP-->
+                                {% include 'cadastro/cep.html' %}
+                                <!--end::Input group CEP-->
+
+                                <!--begin::Input group nome_condominio-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="nome_condominio" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Nome do Condomínio</label>
+                                </div>
+                                <!--end::Input group nome_condominio-->
+                                <!--begin::Input group Bloco-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="bloco" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Bloco</label>
+                                </div>
+                                <!--end::Input group Bloco-->
+                                <!--begin::Input group Unidade-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="unidade" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Unidade</label>
+                                </div>
+                                <!--end::Input group Unidade-->
+                                <!--begin::Input group telefone-->
+                                <div class="form-floating mb-7">
+                                    <input type="email" class="form-control" id="telefone" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Telefone</label>
+                                </div>
+                            </table>
+                        </table>
+                    </div>
+                        <!--end::Input group telefone-->
+
+                        <!--
+                            AQUI COMEÇARÁ OS NOVOS DADOS
+                        -->
+                     <!--begin::Input group novos dados para alterar-->
+                     {% include 'cadastro/novos_alterar_dados.html' %}
+                     <!--end::Input group novos dados para alterar-->
+                    
+                            
+
+                        
+ 
+{% endblock %}

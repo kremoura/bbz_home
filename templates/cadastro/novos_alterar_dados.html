@@ -1,0 +1,64 @@
+<script>
+var myDropzone = new Dropzone("#kt_dropzonejs_example_1", {
+    url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
+    paramName: "file", // The name that will be used to transfer the file
+    maxFiles: 10,
+    maxFilesize: 10, // MB
+    addRemoveLinks: true,
+    accept: function(file, done) {
+        if (file.name == "wow.jpg") {
+            done("Naha, you don't.");
+        } else {
+            done();
+        }
+    }
+});
+
+</script>
+<div class="table-responsive">
+    <table class="table gs-7 gy-7 gx-7">
+        <h2>O que deseja alterar</h1><br />
+            
+               
+                    <!--begin::Input group NOVO EMAIL-->
+                    <div class="form-floating mb-7">
+                        <input type="email" class="form-control" id="novo_email" placeholder="name@example.com"/>
+                        <label for="floatingInput">Novo E-mail</label>
+                    </div>
+                    <!--end::Input group NOVO EMAIL-->
+                    <!--begin::Input group novo CEP-->
+                    {% include 'cadastro/cep_novo.html' %}
+                    <!--end::Input group novo CEP-->
+
+                    <!--begin::Input group Enviar Arquivos-->
+                            <!--begin::Input group-->
+                            <div class="fv-row">
+                                <!--begin::Dropzone-->
+                                <div class="dropzone" id="kt_dropzonejs_example_1">
+                                    <!--begin::Message-->
+                                    <div class="dz-message needsclick">
+                                        <i class="ki-duotone ki-file-up fs-3x text-primary"><span class="path1"></span><span class="path2"></span></i>
+
+                                        <!--begin::Info-->
+                                        <div class="ms-4">
+                                            <h3 class="fs-5 fw-bold text-gray-900 mb-1">Arraste o arquivo até aqui ou Clique.</h3>
+                                            <span class="fs-7 fw-semibold text-gray-500">Permitido até 10 arquivos</span>
+                                        </div>
+                                        <!--end::Info-->
+                                    </div>
+                                </div>
+                                <!--end::Dropzone-->
+                            </div>
+                            <!--end::Input group-->
+                    <!--end::Input group Enviar Arquivos-->
+                    <br />
+                     <!--begin::Input group Info Add-->
+                     <div class="form-floating mb-7">
+                        <input type="email" class="form-control" id="adicional" placeholder="name@example.com"/>
+                        <label for="floatingInput">Deseja fornecer alguma informação adicional?</label>
+                    </div>
+                     <!--end::Input group Info Add-->
+                    
+               
+    </table>
+</div>

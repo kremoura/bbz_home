@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'comum',
     'boleto',
     'cnd',
+    'apis',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

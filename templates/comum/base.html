@@ -1,8 +1,7 @@
 
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 	<!--begin::Head-->
 	<head>
 		<base href="../../" />
@@ -11,7 +10,7 @@
 		<meta name="description" content="Sua página BBZHome" />
 		<meta name="keywords" content="bbz, segunda via de boleto, cnd" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta property="og:locale" content="en_US" />
+		<meta property="og:locale" content="pt-br" />
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="BBZ Administração de Condominio" />
 		<meta property="og:url" content="https://bbz.com.br/home" />
@@ -30,8 +29,40 @@
 	<!--end::Head-->
 	<!--begin::Body-->
 	<body id="kt_body" class="auth-bg">
+		<!--begin::Theme mode setup on page load-->
+		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+		<script>
+			$('#kt_docs_maxlength_basic').maxlength({
+				warningClass: "badge badge-warning",
+				limitReachedClass: "badge badge-success"
+			});    
+		</script>
+		<!--end::Theme mode setup on page load-->
+		<!--begin::Main-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Authentication - Sign-in -->
+			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url("{% static 'assets/imagem/illustrations/sigma-1/14.png' %}")">
+				<!--begin::Content-->
+				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
+					<!--begin::Logo-->
+					<a href="" class="mb-12">
+						<img alt="Logo" src="{% static 'assets/LOGO_BBZ_VERDE.png' %}" class="h-60px" />
+					</a>
+					<!--end::Logo-->
+					<!--begin::Wrapper-->
+					<div class="w-lg-w-lg-900px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+						<!--begin::Item-->
         {% block content %}{% endblock %}
-        {% include 'comum/partial/_footer.html' %}
+				<!--end::Item-->
+						
+					</div>
+					<!--end::Wrapper-->
+				</div>
+			</div>
+			<!--end::Main-->
+		</div>
+        <!--end::Content-->
+		{% include 'comum/partial/_footer.html' %}
     </body>
 	<!--end::Body-->
 </html>
