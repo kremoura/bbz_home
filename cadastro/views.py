@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-def index(request):
+def cad_index(request):
     return render(request, 'cadastro/lgpd.html')
 
 def escolha_atualizacao(request):
