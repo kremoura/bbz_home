@@ -54,4 +54,7 @@ def list_drive_files(request):
     return HttpResponse(file_list)
     
 
+def pasta_prestacao_contas(request):
+    return render(request, 'cadastro/alterar_dados.html')
+
                 
