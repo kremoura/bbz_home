@@ -88,6 +88,9 @@ docs/_build/
 .pybuilder/
 target/
 
+#Google api
+bin/
+
 # Jupyter Notebook
 .ipynb_checkpoints
 
