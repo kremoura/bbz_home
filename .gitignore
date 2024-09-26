@@ -89,7 +89,7 @@ docs/_build/
 target/
 
 #Google api
-bin/
+bin/ 
 
 # Jupyter Notebook
 .ipynb_checkpoints
