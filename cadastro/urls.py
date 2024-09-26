@@ -4,5 +4,7 @@ from cadastro.views import cad_index, escolha_atualizacao, alterar_dados, altera
 urlpatterns = [
     path('cadastro/', cad_index, name='cad_index'),
     path('cadastro/ujeFES/', escolha_atualizacao, name='escolha_atualizacao'),
-    path('cadastro/ukeuOJOU/', alterar_dados, name='alterar_dados')
+    path('cadastro/ukeuOJOU/', alterar_dados, name='alterar_dados'),
+    path('cadastro/ukeuOJuu/', alterar_proprietario, name='alterar_proprietario'),
+    path('cadastro/ukeuOJoo/', alterar_locatario, name='alterar_locatario')
 ]
