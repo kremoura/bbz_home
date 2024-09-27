@@ -1,7 +1,7 @@
 
     <!--begin::Input group CEP-->
     <div class="form-floating mb-7">
-        <input type="email" class="form-control" id="novo_cep" placeholder="13483-000"/>
+        <input type="email" class="form-control" name="new_cep" id="new_cep" placeholder="13483-000"/>
         <label for="floatingInput">CEP</label>
     </div>
     <!--end::Input group CEP-->
@@ -10,7 +10,7 @@
             <td>
                 <!--begin::Input group uf-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="novo_uf" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="new_state" id="new_state" placeholder="13483-000"/>
                     <label for="floatingInput">UF</label>
                 </div>
                 <!--end::Input group uf-->
@@ -18,7 +18,7 @@
             <td>
                 <!--begin::Input group cidade-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="novo_cidade" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="new_city" id="new_city" placeholder="13483-000"/>
                     <label for="floatingInput">Cidade</label>
                 </div>
                 <!--end::Input group cidade-->
@@ -28,7 +28,7 @@
             <td>
                 <!--begin::Input group cidade-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="novo_bairro" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="new_neighborhood" id="new_neighborhood" placeholder="13483-000"/>
                     <label for="floatingInput">Bairro</label>
                 </div>
                 <!--end::Input group cidade-->
@@ -36,7 +36,7 @@
             <td>
                 <!--begin::Input group Endereço-->
             <div class="form-floating mb-7">
-                <input type="email" class="form-control" id="novo_endereco" placeholder="13483-000"/>
+                <input type="email" class="form-control" name="new_address" id="new_address" placeholder="13483-000"/>
                 <label for="floatingInput">Endereço</label>
             </div>
             <!--end::Input group Endereço-->
@@ -47,7 +47,7 @@
                 <!--begin::Input group Número-->
                 
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" id="novo_numero" placeholder="13483-000"/>
+                        <input type="email" class="form-control" name="new_number" id="new_number" placeholder="13483-000"/>
                         <label for="floatingInput">Número</label>
                     </div>
                     <!--end::Input group Número-->
@@ -56,7 +56,7 @@
                 <!--begin::Input group complemento-->
                 
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="novo_complemento" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="new_complement" id="new_complement" placeholder="13483-000"/>
                     <label for="floatingInput">Complemento</label>
                 </div>
                 <!--end::Input group complemento-->
@@ -75,7 +75,7 @@
     
     // Registra o evento blur do campo "cep", ou seja, a pesquisa será feita
     // quando o usuário sair do campo "cep"
-    $("#novo_cep").blur(function(){
+    $("#new_cep").blur(function(){
         // Remove tudo o que não é número para fazer a pesquisa
         var cep = this.value.replace(/[^0-9]/, "");
         
@@ -97,10 +97,10 @@
         $.getJSON(url, function(dadosRetorno){
             try{
                 // Preenche os campos de acordo com o retorno da pesquisa
-                $("#novo_endereco").val(dadosRetorno.logradouro);
-                $("#novo_bairro").val(dadosRetorno.bairro);
-                $("#novo_cidade").val(dadosRetorno.localidade);
-                $("#novo_uf").val(dadosRetorno.uf);
+                $("#new_address").val(dadosRetorno.logradouro);
+                $("#new_neighborhood").val(dadosRetorno.bairro);
+                $("#new_city").val(dadosRetorno.localidade);
+                $("#new_state").val(dadosRetorno.uf);
             }catch(ex){}
         });
     });

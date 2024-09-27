@@ -23,15 +23,15 @@
 										<!--end::Icon-->
 										<!--begin::Title-->
 										<div class="d-flex flex-column">
-											{% for folder_name_item in folder_name %}
-											<h2 class="mb-1">ff{{ folder_name_item }}</h2>
+											
+											<h2 class="mb-1">{{ folder_name.name }}</h2>
 											<div class="text-muted fw-bold">
-											<a href="#">Keenthemes</a>
+											<!-- <a href="#">Keenthemes</a>
 											<span class="mx-3">|</span>
-											<a href="#">File Manager</a>
-											<span class="mx-3">|</span>2.6 GB
-											<span class="mx-3">|</span>758 items</div>
-											{% endfor %}
+											<a href="#">File Manager</a> -->
+											<!-- <span class="mx-3">|</span>2.6 GB -->
+											<!-- <span class="mx-3">|</span>758 items</div> -->
+											
 										</div>
 										<!--end::Title-->
 									</div>
@@ -57,7 +57,17 @@
 												<span class="path1"></span>
 												<span class="path2"></span>
 											</i>
-											<input type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Files & Folders" />
+											<form action="{% url 'pasta_prest_conta' %}" method="post">
+											{% csrf_token %}
+												<table>
+													<tr>
+														<td><input name="search" type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Files & Folders" /></td>
+														<td><input type="submit" value="Buscar" /></td>
+														<input hidden name="is_search" value="1" />
+														<input hidden name="folder_id" value="0By6djoRj_4OYN1RMVloyRmttNEU" />
+													</tr>
+												</table>
+											</form>
 										</div>
 										<!--end::Search-->
 									</div>
@@ -82,16 +92,16 @@
 										<!--begin::Folder path-->
 										<div class="badge badge-lg badge-light-primary">
 											<div class="d-flex align-items-center flex-wrap">
-											<i class="ki-duotone ki-abstract-32 fs-2 text-primary me-3">
-												<span class="path1"></span>
-												<span class="path2"></span>
-											</i>
-											<a href="#">Keenthemes</a>
-											<i class="ki-duotone ki-right fs-2 text-primary mx-1"></i>
-											<a href="#">themes</a>
-											<i class="ki-duotone ki-right fs-2 text-primary mx-1"></i>
-											<a href="#">html</a>
-											<i class="ki-duotone ki-right fs-2 text-primary mx-1"></i>demo1</div>
+												<i class="ki-duotone ki-abstract-32 fs-2 text-primary me-3">
+													<span class="path1"></span>
+													<span class="path2"></span>
+												</i>
+												{% for folder in folders_tree %}
+												<a href="{% url 'pasta_prest_conta' %}?folder_id={{ folder.id }}">{{ folder.name }}</a>
+												<i class="ki-duotone ki-right fs-2 text-primary mx-1"></i>
+												{% endfor %}
+												
+											</div>
 										</div>
 										<!--end::Folder path-->
 										<!--begin::Folder Stats-->
@@ -106,9 +116,9 @@
 										<thead>
 											<tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
 												<th class="w-10px pe-2"></th>
-												<th class="min-w-250px">Name</th>
-												<th class="min-w-10px">Size</th>
-												<th class="min-w-125px">Last Modified</th>
+												<th class="min-w-250px">Nome</th>
+												<th class="min-w-10px">Tamanho</th>
+												<th class="min-w-125px">Ultima modificação</th>
 												<th class="w-125px"></th>
 											</tr>
 										</thead>
@@ -142,7 +152,7 @@
 															<span class="path1"></span>
 															<span class="path2"></span>
 														</i>
-														<a href="{% url 'pasta_prest_conta' %}?folder_id={{ file.id }}" class="text-gray-800 text-hover-primary">{{ file.name }}</a>
+														<a href="{{ file.webContentLink }}" class="text-gray-800 text-hover-primary">{{ file.name }}</a>
 													</div>
 												</td>
 												<td>{{ file.size }} bytes</td>

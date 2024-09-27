@@ -1,7 +1,7 @@
 
     <!--begin::Input group CEP-->
     <div class="form-floating mb-7">
-        <input type="email" class="form-control" id="cep" placeholder="13483-000"/>
+        <input type="email" class="form-control" name="cep" id="cep" placeholder="13483-000"/>
         <label for="floatingInput">CEP</label>
     </div>
     <!--end::Input group CEP-->
@@ -10,7 +10,7 @@
             <td>
                 <!--begin::Input group uf-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="uf" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="state" id="state" placeholder="SP"/>
                     <label for="floatingInput">UF</label>
                 </div>
                 <!--end::Input group uf-->
@@ -18,7 +18,7 @@
             <td>
                 <!--begin::Input group cidade-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="cidade" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="city" id="city" placeholder="São Paulo"/>
                     <label for="floatingInput">Cidade</label>
                 </div>
                 <!--end::Input group cidade-->
@@ -28,7 +28,7 @@
             <td>
                 <!--begin::Input group cidade-->
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="bairro" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="neighborhood" id="neighborhood" placeholder="Jd. Paulistano"/>
                     <label for="floatingInput">Bairro</label>
                 </div>
                 <!--end::Input group cidade-->
@@ -36,7 +36,7 @@
             <td>
                 <!--begin::Input group Endereço-->
             <div class="form-floating mb-7">
-                <input type="email" class="form-control" id="endereco" placeholder="13483-000"/>
+                <input type="email" class="form-control" name="address" id="address" placeholder="Alameda Santos"/>
                 <label for="floatingInput">Endereço</label>
             </div>
             <!--end::Input group Endereço-->
@@ -47,7 +47,7 @@
                 <!--begin::Input group Número-->
                 
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" id="numero" placeholder="13483-000"/>
+                        <input type="email" class="form-control" name="number" id="number" placeholder="134"/>
                         <label for="floatingInput">Número</label>
                     </div>
                     <!--end::Input group Número-->
@@ -56,7 +56,7 @@
                 <!--begin::Input group complemento-->
                 
                 <div class="form-floating mb-7">
-                    <input type="email" class="form-control" id="complemento" placeholder="13483-000"/>
+                    <input type="email" class="form-control" name="complement" id="complement" placeholder="Proximo ao metro"/>
                     <label for="floatingInput">Complemento</label>
                 </div>
                 <!--end::Input group complemento-->
@@ -105,10 +105,10 @@
         $.getJSON(url, function(dadosRetorno){
             try{
                 // Preenche os campos de acordo com o retorno da pesquisa
-                $("#endereco").val(dadosRetorno.logradouro);
-                $("#bairro").val(dadosRetorno.bairro);
-                $("#cidade").val(dadosRetorno.localidade);
-                $("#uf").val(dadosRetorno.uf);
+                $("#address").val(dadosRetorno.logradouro);
+                $("#neighborhood").val(dadosRetorno.bairro);
+                $("#city").val(dadosRetorno.localidade);
+                $("#state").val(dadosRetorno.uf);
             }catch(ex){}
         });
     });

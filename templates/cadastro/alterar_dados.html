@@ -3,20 +3,21 @@
 
 {% block content %}
                     <script src="assets/plugins/global/plugins.bundle.js"></script>
-
+                    <form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="table-responsive">
                         <table class="table gs-7 gy-7 gx-7">
                             <table class="table gs-7 gy-7 gx-7">
                                 <h2>Formulário de Alteração Cadastral</h2><br />
                                 <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-                                    <input class="form-check-input " type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
+                                    <input class="form-check-input " name="owner_check" type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
                                     <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
                                         Proprietário
                                     </label>
                                 </div>
                                 <br />
                                 <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
-                                    <input class="form-check-input " type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
+                                    <input class="form-check-input " name="tenant_check" type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
                                     <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
                                         Locatário
                                     </label>
@@ -24,14 +25,14 @@
                                 <br />
                                 <!--begin::Input group NOME-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
-                                    <label for="floatingInput">Nome</label>
+                                    <input type="name" class="form-control" name="name" id="floatingInput" placeholder="Nome Sobrenome"/>
+                                    <label for="floatingInput">Nome completo</label>
                                 </div>
                                 <!--end::Input group  NOME-->
                                 
                                 <!--begin::Input group EMAIL-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"/>
+                                    <input type="email" class="form-control"name="email" id="floatingInput" placeholder="name@example.com"/>
                                     <label for="floatingInput">E-mail</label>
                                 </div>
                                 <!--end::Input group EMAIL-->
@@ -42,25 +43,25 @@
 
                                 <!--begin::Input group nome_condominio-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="nome_condominio" placeholder="name@example.com"/>
+                                    <input type="name" class="form-control" name="nome_do_condominio" id="nome_condominio" placeholder="name@example.com"/>
                                     <label for="floatingInput">Nome do Condomínio</label>
                                 </div>
                                 <!--end::Input group nome_condominio-->
                                 <!--begin::Input group Bloco-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="bloco" placeholder="name@example.com"/>
+                                    <input type="name" class="form-control" name="block" id="block" placeholder="name@example.com"/>
                                     <label for="floatingInput">Bloco</label>
                                 </div>
                                 <!--end::Input group Bloco-->
                                 <!--begin::Input group Unidade-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="unidade" placeholder="name@example.com"/>
+                                    <input type="name" class="form-control" name="unid" id="unid" placeholder="name@example.com"/>
                                     <label for="floatingInput">Unidade</label>
                                 </div>
                                 <!--end::Input group Unidade-->
                                 <!--begin::Input group telefone-->
                                 <div class="form-floating mb-7">
-                                    <input type="email" class="form-control" id="telefone" placeholder="name@example.com"/>
+                                    <input type="phone" class="form-control" name="phone" id="phone" placeholder="name@example.com"/>
                                     <label for="floatingInput">Telefone</label>
                                 </div>
                             </table>
@@ -74,9 +75,14 @@
                      <!--begin::Input group novos dados para alterar-->
                      {% include 'cadastro/novos_alterar_dados.html' %}
                      <!--end::Input group novos dados para alterar-->
-                    
-                            
+                    <div class="form-floating mb-7">
+                        <table>
+                            <tr>
+                                <td><input class="form-floating mb-7 btn btn-primary hover-elevate-up" type="submit" value="Enviar os dados" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </form>
 
-                        
- 
+                
 {% endblock %}

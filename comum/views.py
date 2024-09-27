@@ -8,3 +8,6 @@ def gera_token(request):
 
 def valida_token(request):
     return render(request, 'comum/valida_token.html')
+
+def building_list(request):
+    return render(request, 'comum/lists/building_lists.html')
