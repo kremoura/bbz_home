@@ -2,13 +2,22 @@
 {% load static %}
 
 {% block content %}
-                    <script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
+<div class="card card-xxl-stretch" style="width: 550px;">
+    <!--begin::Card body-->
+    <div class="card-body d-flex flex-column justify-content-between h-100">
+        <!--begin::Card-->
+			<div class="card">
+				<!--begin::Card body-->
+				<div class="card-body pt-0">
+        <!--begin::Section-->
+        <div class="pt-12">
+                    <script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
                     <form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="table-responsive">
                         <table class="table gs-7 gy-7 gx-7">
                             <table class="table gs-7 gy-7 gx-7">
-                                <h2>Formulário de Alteração Cadastral</h2><br />
                                 <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
                                     <input class="form-check-input " name="owner_check" type="checkbox" value="" checked id="kt_flexSwitchCustomDefault_1_1"/>
                                     <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
@@ -83,6 +92,10 @@
                         </table>
                     </div>
                 </form>
-
+                </div>    
+            </div>    
+        </div>        
+    </div>                
+</div>
                 
 {% endblock %}

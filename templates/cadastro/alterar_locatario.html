@@ -2,8 +2,17 @@
 {% load static %}
 
 {% block content %}
-                    <script src="assets/plugins/global/plugins.bundle.js"></script>
+<script src="assets/plugins/global/plugins.bundle.js"></script>
+<div class="card card-xxl-stretch" style="width: 550px;">
+    <!--begin::Card body-->
+    <div class="card-body d-flex flex-column justify-content-between h-100">
+        <!--begin::Section-->
+        <div class="pt-12">
 
+            <!--begin::Card-->
+			<div class="card">
+				<!--begin::Card body-->
+				<div class="card-body pt-0">
                     <div class="table-responsive">
                         <table class="table gs-7 gy-7 gx-7">
                             <table class="table gs-7 gy-7 gx-7">
@@ -76,9 +85,11 @@
                      <!--begin::Input group novos dados para alterar-->
                      {% include 'cadastro/novos_alterar_dados.html' %}
                      <!--end::Input group novos dados para alterar-->
-                    
-                            
-
+                </div>    
+            </div>         
+        </div>          
+    </div>                      
+</div>
                         
  
 {% endblock %}
