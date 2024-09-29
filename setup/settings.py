@@ -18,7 +18,7 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-GOOGLE_DRIVE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'bin/jfueojFESF/uioe9j3mej/credentials.json')
+#GOOGLE_DRIVE_CREDENTIALS_PATH = os.path.join(BASE_DIR, 'bin/jfueojFESF/uioe9j3mej/credentials.json')
 GOOGLE_DRIVE_SERVICE_ACCOUNT_FILE = os.path.join(BASE_DIR, 'bin/jfueojFESF/uioe9j3mej/service_account.json')
 
 # Quick-start development settings - unsuitable for production
