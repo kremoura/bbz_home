@@ -5,5 +5,6 @@ urlpatterns = [
     path('', index, name='login'),
     path('gerar_token/', gera_token, name='gera_token'),
     path('valida_token/', valida_token, name='valida_token'),
-    path('bulding_list/', building_list, name='building_list')
+    path('bulding_list/', building_list, name='building_list'),
+    path('enviar_token/', gera_token, name='gera_token') 
 ]

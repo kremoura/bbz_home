@@ -1,15 +1,26 @@
 from django.shortcuts import render
+from apis.views import buscar_emails_chatbot_json
+import os
 
 def index(request):
     return render(request, 'comum/sign-in/signin.html')
 
 def gera_token(request):
-    return render(request, 'comum/emails_para_enviar_token.html')
+
+    # Dados de entrada
+    cnpj_cpf = '34212563819'
+    usuario = str(os.getenv('USUARIO'))
+    senha = str(os.getenv('SENHA'))
+    chave = str(os.getenv('CHAVE'))
+
+    response_emails = buscar_emails_chatbot_json(cnpj_cpf, usuario, senha, chave)
+
+    return render(request, 'comum/emails_para_enviar_token.html', {'emails': response_emails})
 
 def valida_token(request):
     return render(request, 'comum/valida_token.html')
 
-def building_list(request):
+def building_list(request): 
     lista_unidades = get_unidades_api(request)
     return render(request, 'comum/lists/building_lists.html', {'lista_unidades': lista_unidades})
 
