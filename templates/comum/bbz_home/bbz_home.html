@@ -1,0 +1,114 @@
+{% extends 'comum/base.html' %}
+{% load templatetags %}
+{% load static %}
+
+{% block content %}
+		<!--begin::Theme mode setup on page load-->
+		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+		<!--end::Theme mode setup on page load-->
+		<!--begin::Main-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Authentication - Sign-in -->
+			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url({% static 'assets/imagem/illustrations/sigma-1/14.png' %})">
+				<!--begin::Content-->
+				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
+					<!--begin::Wrapper-->
+					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+						<!--begin::Heading-->
+						<div class="text-center mb-10">
+							<!--begin::Title-->
+							<h1 class="text-gray-900 mb-3">BBZ HOME</h1>
+							<!--end::Title-->
+							<!--begin::Link-->
+							<div class="text-gray-500 fw-semibold fs-4">Plataforma autenticada BBZ Boleto, CND e mais…</div>
+							<!--end::Link-->
+						</div>
+						<table>
+							<div>
+								<tr>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-barcode fs-2hx">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+												<span class="path4"></span>
+												<span class="path5"></span>
+												<span class="path6"></span>
+												<span class="path7"></span>
+												<span class="path8"></span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										Boleto
+									</td>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-element-11 fs-2hx">
+												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
+												</span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										CND Simples
+									</td>
+								</tr>
+							</div>
+							
+							<div>
+								<tr>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-element-11 fs-2hx">
+												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
+												</span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										CND Autenticada
+									</td>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-element-11 fs-2hx">
+												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
+												</span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										Atualização de cadastro
+									</td>
+								</tr>
+							</div>
+
+							<div>
+								<tr>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-folder fs-2hx">
+												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
+												</span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										Pasta Nuvem
+									</td>
+									<td>
+										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
+											<i class="ki-duotone ki-folder-added fs-2hx">
+												<span class="path1"></span>
+												<span class="path2"></span>
+												<span class="path3"></span>
+												<span class="path4"></span>
+											</i>
+											<span class="pulse-ring border-5"></span>
+										</a>
+										Pasta de prestação de contas
+									</td>
+								</tr>
+							</div>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>				
+{% endblock %}

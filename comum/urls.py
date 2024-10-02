@@ -1,10 +1,11 @@
 from django.urls import path
-from comum.views import index, gera_token, valida_token, building_list
+from comum.views import index, gera_token, listar_emails_escondidos, valida_email, error, bbz_home
 
 urlpatterns = [
     path('', index, name='login'),
-    path('gerar_token/', gera_token, name='gera_token'),
-    path('valida_token/', valida_token, name='valida_token'),
-    path('bulding_list/', building_list, name='building_list'),
-    path('enviar_token/', gera_token, name='gera_token') 
+    path('valida_email/', valida_email, name='valida_email'),
+    path('bbzhome/', bbz_home, name='bbz_home'),
+    path('lista_emails_cadastrados/', listar_emails_escondidos, name='listar_emails_escondidos'),
+    path('enviar_token/', gera_token, name='gera_token'), 
+    path('error/', error, name='error'),
 ]

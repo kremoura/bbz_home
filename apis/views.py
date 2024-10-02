@@ -1,16 +1,52 @@
 import json
-import re
 from django.shortcuts import render
 from zeep import Client
 from zeep.transports import Transport
 from requests import Session
-from requests.auth import HTTPBasicAuth
 from requests.adapters import HTTPAdapter
-import base64
+import os
 import requests
 
+def verificar_intranet_ou_internet():
 
-def buscar_emails_chatbot_json(cnpj_cpf, usuario, senha, chave):
+    url = "http://bbz.mine.nu:81/condominioweb/wsDocumentos.asmx?WSDL"
+
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            return url
+        else:
+            return "http://192.168.0.203/condominioweb/wsDocumentos.asmx?WSDL"
+    except requests.exceptions.RequestException:
+        return "http://192.168.0.203/condominioweb/wsDocumentos.asmx?WSDL"
+
+def verificar_intranet_ou_internet_reduzido():
+
+    url = "http://bbz.mine.nu:81"
+
+    try:
+        response = requests.get(url, timeout=5)
+        if response.status_code == 200:
+            return url
+        else:
+            return "http://192.168.0.203"
+    except requests.exceptions.RequestException:
+        return "http://192.168.0.203"
+
+def valida_apis():
+    usuario = str(os.getenv('USUARIO'))
+    senha = str(os.getenv('SENHA'))
+    chave = str(os.getenv('CHAVE'))
+
+    lista_campos_validadores = {'usuario': usuario, 'senha': senha, 'chave': chave}
+
+    return lista_campos_validadores
+
+def buscar_emails_chatbot_json(cnpj_cpf, esconder_email = True):
+
+    # URL do WSDL
+    wsdl_url = verificar_intranet_ou_internet()
+    wsdl_url_reduzido = verificar_intranet_ou_internet_reduzido()
 
     # Crie uma sessão com um tempo de espera de 30 segundos
     session = Session()
@@ -18,25 +54,24 @@ def buscar_emails_chatbot_json(cnpj_cpf, usuario, senha, chave):
 
     # Crie um adaptador de transporte com a porta correta
     adapter = HTTPAdapter(max_retries=3)
-    session.mount('http://bbz.mine.nu:81', adapter)
+    session.mount(wsdl_url_reduzido, adapter)
 
     # Crie um transporte com a sessão
     transport = Transport(session=session)
 
-    # URL do WSDL
-    wsdl_url = "http://bbz.mine.nu:81/condominioweb/wsDocumentos.asmx?WSDL"
-
     # Crie o cliente com o transporte
-    client = Client(wsdl="http://bbz.mine.nu:81/condominioweb/wsDocumentos.asmx?WSDL", transport=transport)
+    client = Client(wsdl=wsdl_url, transport=transport)
 
     # Substitua o endpoint do serviço SOAP para garantir que a conexão seja feita na porta correta
-    client.service._binding_options['address'] = "http://bbz.mine.nu:81/condominioweb/wsDocumentos.asmx"
+    client.service._binding_options['address'] = wsdl_url
+
+    lista_campos_validadores = valida_apis()
 
     # Dados de entrada
     cnpj_cpf = cnpj_cpf
-    usuario = usuario
-    senha = senha
-    chave = chave
+    usuario = lista_campos_validadores.get('usuario')  # Substitua pelo seu valor de usuario
+    senha = lista_campos_validadores.get('senha')  # Substitua pelo seu valor de senha
+    chave = lista_campos_validadores.get('chave')  # Substitua pelo seu valor de chave
 
     # Chamar a operação
     try:
@@ -49,11 +84,14 @@ def buscar_emails_chatbot_json(cnpj_cpf, usuario, senha, chave):
 
         for condominio in resultado_json['Condominio']:
             for email in condominio['email'].split(','):
-                # Esconder partes do email
-                local_part = email.split('@')[0]
-                domain = email.split('@')[1]
-                email_escondido = local_part[1] + '***' + '@' + domain.split('.')[0][0] + '***' + '.' + domain.split('.')[-1]
-                emails.add(email_escondido)
+                if esconder_email:
+                    # Esconder partes do email
+                    local_part = email.split('@')[0]
+                    domain = email.split('@')[1]
+                    email_escondido = local_part[1] + '***' + '@' + domain.split('.')[0][0] + '***' + '.' + domain.split('.')[-1]
+                    emails.add(email_escondido)
+                else:
+                    emails.add(email)
 
         return emails
     except Exception as e:
@@ -71,12 +109,9 @@ def buscar_emails(request):
     """
     # Dados de entrada
     cnpj_cpf = '34212563819'
-    usuario = 'bucha' 
-    senha = 'Lnq:0BG^57,R~DIoovAz`'
-    chave = ";vM^t;+_;b0JbGJ+LiC-_0-^-;qW=T_o+dPN_;=+_^nYiV;_YEkg7BL+Ea^0;Q0Y-;W^ZZ"
     
     # Chama a função que consome a API
-    response = buscar_emails_chatbot_json(cnpj_cpf, usuario, senha, chave)
+    response = buscar_emails_chatbot_json(cnpj_cpf)
     
     # Retornar a resposta como JSON
     return render(request, 'api/buscar_emails.html', {'results': response})  # Renderiza a página HTML com a resposta({'result': response})

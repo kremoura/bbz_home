@@ -1,6 +1,19 @@
 {% extends 'comum/base.html' %}
 {% load static %}
 {% block content %}
+				<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+				<script type="text/javascript">
+					$(document).ready(function () {
+						$('#termo').click(function () {
+							if ($('.checkbox-row .style-checkbox label').hasClass('active')) {
+								$('.checkbox-row .style-checkbox label').removeClass('active');
+							} else {
+								$('.checkbox-row .style-checkbox label').addClass('active');
+							}
+						});
+					});
+				</script>
 		<!--begin::Theme mode setup on page load-->
 		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
 		<!--end::Theme mode setup on page load-->
@@ -18,7 +31,8 @@
 					<!--begin::Wrapper-->
 					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
 						<!--begin::Form-->
-						<form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" data-kt-redirect-url="{% url 'gera_token' %}" action="post">
+						<form class="form w-100" novalidate="novalidate" id="kt_docs_formvalidation_checkbox" data-kt-redirect-url="{%  url 'listar_emails_escondidos' %}" method="post" action="{%  url 'listar_emails_escondidos' %}">
+							{% csrf_token %}
 							<!--begin::Heading-->
 							<div class="text-center mb-10">
 								<!--begin::Title-->
@@ -36,7 +50,7 @@
 								
 									<!--begin::Input group-->
 									<div class="form-floating mb-7">
-										<input type="cpf" class="form-control" name="cpf" id="floatingInput" placeholder="name@example.com"/>
+										<input type="cpf" class="form-control" name="cpf" id="floatingInput" placeholder="123.456.789-19 ou 01.102.111/0001/09" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('O Campo CPF é obrigatório.')" required />
 										<label for="floatingInput">CPF/CNPJ do TITULAR</label>
 									</div>
 									<!--end::Input group-->
@@ -44,18 +58,32 @@
 							<!--end::Input group-->
 							<!--begin::Input group-->
 							<div class="fv-row mb-10">
+								<div style="font-family: arial, sans-serif;" class="checkbox-row d-flex mb-6 ">
+									<div class="checkbox-row d-flex" style="display:-webkit-inline-box; padding:10px 0;">
+										<div class="">
+											<input value="unchecked" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Você deve aceitar os Termos de Uso e Politica de Privacidade, para emitir o boleto.')" required type="checkbox" id="termo" name="termo" />
+											<label for="termo"></label>
+										</div>
+										<label for="termo" class="pt-6 fc-black regular ml-1 mb-0">Eu aceito os <a target="_blank" href="https://bbz.com.br/termos-de-uso-do-produto/"><b>Termos de Uso</b></a> e a <a target="_blank" href="https://bbz.com.br/politica-de-privacidade/"><b>Pol&iacute;tica de Privacidade</b></a> da BBZ *</label>
+									</div>
+								</div>
+								<div style="font-family: arial, sans-serif;" class="checkbox-row d-flex mb-6 ">
+									<div class="checkbox-row d-flex" style="display:-webkit-inline-box; padding:10px 0;">
+										<div class="">
+											<input value="unchecked" onchange="try{setCustomValidity('')}catch(e){}" oninvalid="setCustomValidity('Você deve aceitar os Termos do BOLETO por TITULAR para emitir o boleto.')" required type="checkbox" id="termo2" name="termo2" />
+											<label for="termo2"></label>
+										</div>
+										<label for="termo2" class="pt-6 fc-black regular ml-1 mb-0">Eu aceito os <a target="_blank" href="https://bbz.com.br/boleto/termodeuso"><b>Termos de Uso </b></a> BBZ HOME *</label>
+									</div>
+								</div>
 							</div>
 							<!--end::Input group-->
-							<!--begin::Actions-->
-							<div class="text-center">
-								<!--begin::Submit button-->
-								<button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-primary w-100 mb-5">
-									<span class="indicator-label">Gerar TOKEN de acesso</span>
-									<span class="indicator-progress">Aguarde por favor... 
-									<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+					
+								<!--begin::Actions-->
+								<button id="kt_docs_formvalidation_text_submit" type="submit" class="btn btn-primary">
+									Enviar
 								</button>
-								<!--end::Submit button-->
-							</div>
+								<!--end::Actions-->
 							<!--end::Actions-->
 						</form>
 						<!--end::Form-->
@@ -63,5 +91,4 @@
 					<!--end::Wrapper-->
 				</div>
 				<!--end::Content-->
-				
 {% endblock %}

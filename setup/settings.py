@@ -32,6 +32,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+TEMPLATE_TAGS_MODULES = ['comum.templatetags']
+
+SESSION_COOKIE_AGE = 1800  # 30 minutos em segundos
+
+
+EMAIL_HOST = 'smtp-relay.brevo.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'ti@bbz.com.br'
+EMAIL_HOST_PASSWORD = '85dL1z9GZkrSOAHW'
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = False
 
 # Application definition
 
@@ -49,6 +61,9 @@ INSTALLED_APPS = [
     'apis',
     'rest_framework',
     'prestacao_contas',
+    'log',
+    'token_home',
+    'white_list',
 ]
 
 MIDDLEWARE = [
