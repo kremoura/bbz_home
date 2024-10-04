@@ -7,4 +7,5 @@ urlpatterns = [
     path('', include('comum.urls')),
     path('', include('prestacao_contas.urls')),
     path('', include('apis.urls')),
+    path('', include('boleto.urls')),
 ]

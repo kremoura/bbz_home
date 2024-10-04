@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from apis.views import buscar_emails_chatbot_json
+from apis.views import buscar_emails_chatbot_json, get_unidades_api
 from django import template
 from log.views import criar_log, adicionar_descricao_log
 from django.core.mail import send_mail
@@ -8,10 +8,6 @@ from django.template.loader import render_to_string
 from token_home.models import TokenHome
 from datetime import datetime, timedelta
 from white_list.models import WhiteList
-
-
-
-
 
 import random
 import re
@@ -211,7 +207,6 @@ def listar_emails_escondidos(request):
 
     try:
         log_id = criar_log(request, dados)
-        print(f'log_id: {log_id}') #debug
         if log_id is not None:
             cria_sessao(request, 'log_id', log_id)
         else:
@@ -219,34 +214,6 @@ def listar_emails_escondidos(request):
         return render(request, 'comum/emails_para_enviar_token.html', {'emails': response_emails})
     except Exception as e:
         return error(request, str(e))
-
-def get_unidades_api(request):
-    nome_condominio = "000395 - Edificio Fascino"
-    bloco = " 0  "
-    unidade = "000091"
-    situacao = 1
-    cid = 395
-
-    if situacao  == 1:
-        situacao = 'adimplente'
-    elif situacao == 0:
-        situacao = 'inadimplente'
-
-    lista_unidades = []
-
-    api_lista_unidades = {
-        'nome_condominio': nome_condominio,
-        'nome_condominio': nome_condominio,
-        'bloco': bloco,
-        'unidade': unidade,
-        'situacao': situacao,
-        'cid': cid,
-    }
-
-    lista_unidades.append(api_lista_unidades)
-        
-
-    return lista_unidades
 
 def criar_token():
     token = str(random.randint(100000, 999999))
@@ -256,3 +223,19 @@ def enviar_email_token(token, email_remetente, email_destinatario, data_validade
     subject = "Seu Token de Acesso"
     body = render_to_string("comum/corpo_email_enviar_token.html", {"token": token, "data_validade": data_validade})
     return send_mail(subject, body, email_remetente, [email_destinatario], html_message=body)
+
+def lista_condominio_unidades_por_cpf(request):
+    cnpj_cpf = request.session.get('cnpj_cpf')
+    email_informado = request.session.get('email_informado')
+    log_id = request.session.get('log_id')
+
+    if not cnpj_cpf:
+        return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
+    
+    try:
+        lista_unidades = get_unidades_api(cnpj_cpf)
+        
+        return render(request, 'comum/lists/lista_unidades_por_cpf.html', {'lista_unidades': lista_unidades})
+    except Exception as e:
+        return error(request, f'.Erro ao buscar unidades: {str(e)}')
+    

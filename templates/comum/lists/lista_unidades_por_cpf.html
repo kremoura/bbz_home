@@ -26,6 +26,7 @@
 												<th class="min-w-125px">Bloco</th>
 												<th class="min-w-125px">Unidade</th>
 												<th class="min-w-125px">Status da Unidade</th>
+												<th class="min-w-125px">Tipo</th>
 												<th class="min-w-125px">Ações</th>
 												
 											</tr>
@@ -49,7 +50,12 @@
 												</td>
 												<td class="text-end">
 													<!--begin::Badges-->
-													<div class="badge badge-light-success">{{ lista_unidade.situacao }}</div>
+													<div class="badge badge-light-success">Adimplente</div>
+													<!--end::Badges-->
+												</td>
+												<td class="text-end"></td>
+													<!--begin::Badges-->
+													<div class="badge badge-light-success">{{ lista_unidade.tipo }}</div>
 													<!--end::Badges-->
 												</td>
 												<td class="text-end">
@@ -64,7 +70,7 @@
 														<!--end::Menu item-->
 														<!--begin::Menu item-->
 														<div class="menu-item px-3">
-															<a href="apps/customers/view.html" class="menu-link px-3">Boleto por E-Mail</a>
+															<a href="{% url 'boleto_pagamento' %}?condominio={{ lista_unidade.condominio }}&unidade={{ lista_unidade.unidade }}&bloco={{ lista_unidade.bloco }}" class="menu-link px-3">Boleto por E-Mail</a>
 														</div>
 														<!--end::Menu item-->
 														<!--begin::Menu item-->

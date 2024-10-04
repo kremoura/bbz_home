@@ -1,5 +1,5 @@
 from django.urls import path
-from comum.views import index, gera_token, listar_emails_escondidos, valida_email, error, bbz_home
+from comum.views import index, gera_token, listar_emails_escondidos, valida_email, error, bbz_home, lista_condominio_unidades_por_cpf
 
 urlpatterns = [
     path('', index, name='login'),
@@ -8,4 +8,5 @@ urlpatterns = [
     path('lista_emails_cadastrados/', listar_emails_escondidos, name='listar_emails_escondidos'),
     path('enviar_token/', gera_token, name='gera_token'), 
     path('error/', error, name='error'),
+    path('unidades/', lista_condominio_unidades_por_cpf, name='lista_condominio_unidades_por_cpf'),
 ]
