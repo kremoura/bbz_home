@@ -76,7 +76,12 @@ def bbz_home(request):
 def valida_email(request):
     pass    
 
-def error(request, error):
+def error(request, error=None):
+    if request.GET.get('error'):
+        error = request.GET.get('error')
+    else:
+        error = error
+
     return render(request, 'error/error.html', {'error': error})
 
 def cria_sessao(request, indice, valor):
@@ -224,6 +229,14 @@ def enviar_email_token(token, email_remetente, email_destinatario, data_validade
     body = render_to_string("comum/corpo_email_enviar_token.html", {"token": token, "data_validade": data_validade})
     return send_mail(subject, body, email_remetente, [email_destinatario], html_message=body)
 
+def enviar_email_boleto(email_destinatario, attachment):
+    boleto = 'b'
+    subject = "Seu Boleto"
+    email_remetente = 'bode@bbz.com.br'
+    
+    body = render_to_string("boleto/corpo_email_enviar_boleto.html", {"boleto": boleto})
+    return send_mail(subject, body, email_remetente, [email_destinatario], html_message=body)
+
 def lista_condominio_unidades_por_cpf(request):
     cnpj_cpf = request.session.get('cnpj_cpf')
     email_informado = request.session.get('email_informado')
@@ -239,3 +252,8 @@ def lista_condominio_unidades_por_cpf(request):
     except Exception as e:
         return error(request, f'.Erro ao buscar unidades: {str(e)}')
     
+def verificar_sessao_home(request):
+    if not request.session.get('cnpj_cpf') or not request.session.get('email_informado') or not request.session.get('log_id'):
+        return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
+    else:
+        return True

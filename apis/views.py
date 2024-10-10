@@ -5,6 +5,7 @@ from requests import Session
 from requests.adapters import HTTPAdapter
 from datetime import datetime, timedelta
 import xml.etree.ElementTree as ET
+from io import BytesIO
 
 import os
 import requests
@@ -52,9 +53,9 @@ def verificar_intranet_ou_internet_reduzido():
         return "http://192.168.0.203"
 
 def valida_apis():
-    usuario = str(os.getenv('USUARIO'))
-    senha = str(os.getenv('SENHA'))
-    chave = str(os.getenv('CHAVE'))
+    usuario = 'bucha'
+    senha = 'Lnq:0BG^57,R~DIoovAz`'
+    chave = ';vM^t;+_;b0JbGJ+LiC-_0-^-;qW=T_o+dPN_;=+_^nYiV;_YEkg7BL+Ea^0;Q0Y-;W^ZZ'
 
     lista_campos_validadores = {'usuario': usuario, 'senha': senha, 'chave': chave}
 
@@ -90,10 +91,6 @@ def buscar_emails_chatbot_json(cnpj_cpf, esconder_email = True):
     usuario = lista_campos_validadores.get('usuario')  # Substitua pelo seu valor de usuario
     senha = lista_campos_validadores.get('senha')  # Substitua pelo seu valor de senha
     chave = lista_campos_validadores.get('chave')  # Substitua pelo seu valor de chave
-
-    #debug
-    print(f"cnpj_cpf: {cnpj_cpf}  usuario: {usuario} senha: {senha} chave: {chave}")
-    print(f"wsdl_url: {wsdl_url} wsdl_url_reduzido: {wsdl_url_reduzido}")
 
     # Chamar a operação
     try:
@@ -238,19 +235,30 @@ def buscar_segunda_via_boleto_xml_por_recibo(recibo):
         lista_segunda_via = []
 
         for item in response_dict.values():
-
-            lista = {
-                'nome_banco': item['Recibos']['nome_banco'],
-                'linha_digitavel': item['Recibos']['linha_digitavel'],
-                'nome_cedente': item['Recibos']['nome_cedente'],
-                'nome_banco': item['Recibos']['nome_banco'],
-                'recibo': item['Recibos']['recibo'],
-            }
-            lista_segunda_via.append(lista)
+            lista_segunda_via.append(item)
 
         return lista_segunda_via
     except Exception as e:
         return f"(DEF: buscar_segunda_via_boleto_xml_por_recibo)Erro ao chamar o serviço: {str(e)}"
+
+def boleto_pdf(request, recibo):
+    #client SOAP
+    client = cria_client_soap()
+
+    lista_campos_validadores = valida_apis()
+
+    # Dados de entrada
+    recibo = recibo
+    usuario = lista_campos_validadores.get('usuario')  # Substitua pelo seu valor de usuario
+    senha = lista_campos_validadores.get('senha')      # Substitua pelo seu valor de senha
+    chave = lista_campos_validadores.get('chave')      # Substitua pelo seu valor de chave
+
+    try:
+        # Chama a operação do serviço SOAP
+        response = client.service.SegundaViaBoletos_PDF(recibo, usuario, senha, chave)
+        return response
+    except Exception as e:
+        return f"(DEF:boleto_pdf)Erro ao chamar o serviço: {str(e)}"
 
 def buscar_boletos_unidade(request):
     #client SOAP

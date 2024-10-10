@@ -2,10 +2,123 @@
 {% load static %}
 
 {% block content %}
-	<div class="card card-xxl-stretch" style="width: 1060px;">
+<script type='text/javascript'>
+
+    function enviaForm2(){
+        location.href='https://bbz.com.br/home/logout.php';
+    }
+
+    function visDesc(id){
+        var style = document.getElementById(id).style.display;
+
+        if(style != 'none'){
+            document.getElementById(id).style.display = 'none';
+        }else{
+            document.getElementById(id).style.display = 'block';
+        }
+    }
+    
+    function copyToClipBoard(seq){
+
+          var copyText = document.getElementById('seq' + seq);
+          var field    = document.getElementById('button' + seq);
+          
+          copyText.select();
+          copyText.setSelectionRange(0, 99999);
+
+          navigator.clipboard.writeText(copyText.value).then(() => {
+            field.setAttribute('data-bs-content', 'Codigo de Barras copiado com sucesso.');
+
+                setInterval(function(){
+                    field.value =  'Copiar';
+                  }, 10000);
+            }).catch(() => {
+                 field.setAttribute('data-bs-content', 'Alguma coisa deu errado, por favor, tente selecionar e copiar com Control+C');
+            });
+    }
+
+    $("#kt_datatable_responsive").DataTable({
+	    responsive: true
+    });
+
+    function enviaEmail(email, recibo, vencto_original) {
+
+    var csrfToken = getCookie('csrftoken');
+    var button = document.getElementById('envia_boleto');
+    button.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="sr-only">Carregando...</span></div>';
+
+        $.ajax({
+            url: '/envia_email_boleto/',
+            type: 'POST',
+            headers: {
+            'X-CSRFToken': csrfToken
+            },
+            data: {
+            email: email,
+            recibo: recibo,
+            vencto_original: vencto_original
+            },
+            success: function(response) {
+                if (response.retorno == 'sim') {
+                    document.getElementById('envia_boleto').innerHTML = '<button type="button" id="kt_docs_sweetalert_state_success" class="btn btn-success">Enviado com sucesso! Aguarde 30 minutos para enviar novamente.</button>';
+                    const button = document.getElementById('kt_docs_sweetalert_state_error');
+                    Swal.fire({
+                        text: "Envio de boleto",
+                        icon: "success",
+                        buttonsStyling: false,
+                        confirmButtonText: "Ok!",
+                        customClass: {
+                             confirmButton: "btn btn-primary"
+                        }
+                    });
+                } else {
+                    if(response.retorno == 'Você precisa fazer o login novamente'){
+                        window.location.href = '/error/?error=' + response.retorno;
+                    }else{
+                        document.getElementById('envia_boleto').innerHTML = '<button onclick="enviaEmail(\'{{ request.session.email_informado }}\', \'{{ item.Recibos.recibo }}\', \'{{ item.Recibos.vencto_original }}\')" type="button" id="kt_docs_sweetalert_state_success" class="btn btn-success">' + response.retorno + '</button>';
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+            // Aqui você pode tratar erros da requisição
+            alert(error)
+            console.log(error);
+            }
+        });
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+            }
+        }
+        return cookieValue;
+        }
+
+</script>
+	<div class="card card-xxl-stretch" style="width: 1260px;">
 		<!--begin::Card body-->
 		<div class="card-body d-flex flex-column justify-content-between h-100">
-			<h2 >Lista de unidades</h2>
+			<h2>Boletos disponíveis para CPF/CNPJ TITULAR 359.759.208-25</h2>
+            <h3>Condomínio: 663 - EDIFICIO JAU Bloco: 0 Unidade: 000602</h3>
+            <div class='padt-3 padb-3 text-center'>
+                <h1 class='text-red-100 fw-bold' style='font-size: 15px; background: white; color: red;'>
+                    IMPORTANTE !!! A BBZ recomenda conferir rigorosamente todos os dados abaixo!<br /> 
+                    NÃO NÓS RESPONSABILIZAMOS por eventuais discrepâncias causadas pelo vosso hardware e/ou software utilizado na geração deste relatório.<br />
+                    Recomendamos comparar todos os dados abaixo com uma outra fonte alternativa confiável (Boleto Eletrônico DDA, App BBZ, Portal BBZ, e-mail, etc.)<br />
+                    antes de efetuar o pagamento. Sempre utilizar no mínimo DUAS fontes confiáveis e independentes, isto é: AUTENTICAÇÃO EM DUAS ETAPAS.<br />
+                    Para evitar o boleto fraudado, após a autenticação em duas etapas, sempre efetue o pagamento via Boleto Eletrônico (DDA) exclusivamente no banco do titular.
+                    NUNCA PAGUE PARA BENEFICIÁRIO FINAL DIFERENTE DO SEU CONDOMÍNIO !!!
+                </h1>
+               
+            </div>
 			<!--begin::Section-->
 			<div class="pt-12">
 
@@ -14,72 +127,127 @@
 								<!--begin::Card body-->
 								<div class="card-body pt-0">
 									<!--begin::Table-->
-									<table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+									<table style="border-collapse: collapse;" class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
 										<thead>
 											<tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-												<th class="w-10px pe-2">
+												<!--<th class="w-10px pe-2">
 													<div class="form-check form-check-sm form-check-custom form-check-solid me-3">
 														<input class="form-check-input" type="checkbox" data-kt-check="true" data-kt-check-target="#kt_customers_table .form-check-input" value="1" />
 													</div>
-												</th>
-                                                <th class="min-w-125px">SEQ.</th>
-												<th class="min-w-125px">Valor</th>
+												</th>-->
+                                                <th class="min-w-12px">SEQ.</th>
+												<th class="min-w-100px">Valor</th>
 												<th class="min-w-125px">Venc. Original</th>
 												<th class="min-w-125px">Data Limite</th>
-												<th class="min-w-125px">Linha Digitavel</th>
-												<th class="min-w-125px">Copiar Linha Digitavel</th>
-												<th class="min-w-125px">Situação</th>
-												<th class="min-w-125px">Unidade</th>
-                                                <th class="min-w-125px">CNPJ do Cedente</th>
-                                                <th class="min-w-125px">Banco</th>
-                                                <th class="min-w-125px">Boleto por E-Mail</th>
+												<th class="min-w-150px">Linha Digitavel</th>
+												<th class="min-w-150px">Copiar Linha Digitavel</th>
+												<th class="min-w-50px">Situação</th>
+                                                <th class="min-w-150px">CNPJ do Cedente</th>
+                                                <th class="min-w-80px">Banco</th>
+                                                <th class="min-w-50px">Boleto por E-Mail</th>
 											</tr>
 										</thead>
 										<tbody class="fw-semibold text-gray-600">
-											{% for lista_boleto in lista_boletos %}
-											<tr>
-												<td>
-													<div class="form-check form-check-sm form-check-custom form-check-solid">
-														<input class="form-check-input" type="checkbox" value="1" />
-													</div>
-												</td>
-												<td>
-													<a href="apps/ecommerce/customers/details.html" class="text-gray-800 text-hover-primary mb-1">1</a>
-												</td>
-												<td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">{{ lista_boleto.valor }}</a>
-												</td>
-												<td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">{{ lista_boleto.vencto_original }}</a>
-												</td>
-                                                <td></td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">Data Limite</a>
-												</td>
-												<td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">Aqui vai o codigo de barras</a>
-												</td>
-												<td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">copiar codigo de barras</a>
-												</td>
-                                                <td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">situação</a>
-												</td>
-												<td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">Unidade</a>
-												</td>
-                                                <td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">CNPJ CEDENTE</a>
-												</td>
-                                                <td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">Banco</a>
-												</td>
-                                                <td>
-													<a href="#" class="text-gray-600 text-hover-primary mb-1">Boleto por email</a>
-												</td>
-											</tr>
+											{% for lista_boleto in lista_segunda_via_boleto %}
+                                                {% for item in lista_boleto %}
+                                                    {% with looping_principal=forloop.counter %}
+                                                        <textarea style='display:none;' name='seq{{ forloop.counter }}' id='seq{{ forloop.counter }}'>{{ item.Recibos.linha_digitavel }}</textarea>
+                                                        <tr>
+                                                            <!--<td>
+                                                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                    <input class="form-check-input" type="checkbox" value="1" />
+                                                                </div>
+                                                            </td>-->
+                                                            <td>
+                                                                {{ forloop.counter }}
+                                                            </td>
+                                                            <td>
+                                                                {{ item.Recibos.valor }}
+                                                            </td>
+                                                            <td>
+                                                                {{ item.Recibos.vencto_original }}
+                                                            </td>
+                                                            <td>
+                                                                {{ item.Recibos.data_limite }}
+                                                            </td>
+                                                            <td>
+                                                                {{ item.Recibos.linha_digitavel }}
+                                                            </td>
+                                                            <td>
+                                                                <button id='button{{ forloop.counter }}' name='button{{ forloop.counter }}' type="button" onclick='copyToClipBoard("1")' class="btn btn-secondary my-2 me-5" data-bs-toggle="popover" data-bs-dismiss="true" title="Copiar o Código de Barras" data-bs-content="o código de barras foi copiado com sucesso.">
+                                                                    Copiar Cod.Barras
+                                                                </button>
+                                                            </td>
+                                                            <td>
+                                                                situação
+                                                            </td>
+
+                                                            <td>
+                                                                {{ item.Recibos.nome_cedente }}
+                                                            </td>
+                                                            <td>
+                                                                {{ item.Recibos.nome_banco }}
+                                                            </td>
+                                                            <td>
+                                                                <div id="envia_boleto">
+                                                                    {% if lista_cookie_ja_enviou == None %}
+                                                                    <button onclick="enviaEmail('{{ request.session.email_informado }}', '{{ item.Recibos.recibo }}', '{{ item.Recibos.vencto_original }}')"  type="button" id="kt_docs_sweetalert_state_error" class="btn btn-danger">Enviar Boleto por E-Mail</button>
+                                                                    {% else %}
+                                                                    <button onclick="enviaEmail('{{ request.session.email_informado }}', '{{ item.Recibos.recibo }}', '{{ item.Recibos.vencto_original }}')" type="button" id="kt_docs_sweetalert_state_success" class="btn btn-success">
+                                                                        {{ lista_cookie_ja_enviou }}
+                                                                    </button>
+                                                                    {% endif %}
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <table id="kt_datatable_responsive" class="table table-striped border rounded gy-5 gs-7">
+                                                            <thead>
+                                                                <h4>LANÇAMENTOS DESTE BOLETO</h4>
+                                                                <tr class="fw-semibold fs-6 text-gray-800">
+                                                                    <th class="min-w-125px"></th>
+                                                                    <th class="min-w-125px">Seq.</th>
+                                                                    <th class="min-w-125px">Valor</th>
+                                                                    <th class="min-w-150px">Descrição</th>
+                                                                </tr>
+                                                            </thead>
+                                                            {% with qtd_lancamentos=item.Lancamentos.valor|length %}
+                                                                qtdw lançamentos: {{qtd_lancamentos}}
+                                                                {% for lancamento in item.Lancamentos %}
+                                                                    {% if item.Lancamentos.descricao != descricao_anterior %}
+                                                                            <tbody style='background: white;'>
+                                                                                <tr>
+                                                                                    <td class="min-w-125px"></td>
+                                                                                    <td>{{ looping_principal }},{{ forloop.counter }}</td>
+                                                                                    <td>{{ item.Lancamentos.valor }}</td>
+                                                                                    <td style='text-align: left;'>{{ item.Lancamentos.descricao }}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                    {% endif %}
+                                                                    {% with descricao_anterior=item.Lancamentos.descricao %}
+                                                                    {% endwith %}
+                                                                {% endfor %}
+                                                            {% endwith %}
+                                                    </table>
+                                                    {% endwith %}
+                                                {% endfor %}
 											{% endfor %}
 										</tbody>
 										<!--end::Table body-->
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="4"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="4"><font style="font-size: 20px;" color="red">Os boletos vencidos/fora do prazo bancário, solicite aqui:</font> <a style="font-size: 20px;" href="https://www.BBZ.com.br/boleto30plus" target="_blank">BBZ.com.br/boleto30plus</a></td>
+                                                </tr>
+                                            </tbody>
+                                       </table>
+                                        <div class='padt-3 padb-3 text-center'>
+                                            <img src='http://bbz.com.br/home/imagem/linha_digitavel.png' />
+                                        </div>
 									</table>
 									<!--end::Table-->
 								</div>
