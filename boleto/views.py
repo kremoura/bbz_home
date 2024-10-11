@@ -1,4 +1,5 @@
 import json
+import os
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.core.mail import EmailMessage
@@ -133,6 +134,9 @@ def envia_email_boleto(request):
         email = EmailMultiAlternatives(subject, body, email_remetente, [email_destinatario])
         email.attach(pdf_mime)
         email.send()
+
+        # Exclui o arquivo PDF
+        os.remove(nome_pdf)
 
         # Atualiza a sessão com o tempo do último envio
         request.session[nome_chave_sessao_ja_enviou_email] = datetime.now().isoformat()

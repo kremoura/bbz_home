@@ -31,47 +31,51 @@ def bbz_home(request):
 
     if not cnpj_cpf:
         return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
-    
-    try:
-        token_gerado = TokenHome.objects.get(token=request.POST.get('numero_token'))
 
-        #atualiza o Log
-        descricao2 = ''
-        token_validado = False
+    if 'token_validado' not in request.session:
+        try:
+            token_gerado = TokenHome.objects.get(token=request.POST.get('numero_token'))
 
-        if timezone.now() > token_gerado.validade:
-            # a data e hora atual é posterior ao campo validade
-            descricao2 = 'Token já expirado.'
-            return error(request, descricao2)
-        elif token_gerado.usado:
-            #verifica se o TOKEN já foi usado.
-            descricao2 = 'Token já usado.'
-            return error(request, descricao2)
-        elif token_gerado.email != email_informado:
-             #verifica se o email é o mesmo que foi enviado o TOKEN.
-            descricao2 = f'O TOKEN foi enviado para outro E-Mail. No banco: {token_gerado.email} - na sessao: {email_informado} '
-            return error(request, descricao2)
-        else:
-            #valida o TOKEN corretamente
-            token_gerado.usado = True
-            token_gerado.data_uso = timezone.now()
-            token_gerado.save()
-            token_validado = True
-            descricao2 = 'Token validado com sucesso.'
+            #atualiza o Log
+            descricao2 = ''
+            token_validado = False
 
-        descricao = f' Validação do Token: {token_gerado} - enviado para o E-Mail: {email_informado} - {descricao2}'
+            if timezone.now() > token_gerado.validade:
+                # a data e hora atual é posterior ao campo validade
+                descricao2 = 'Token já expirado.'
+                return error(request, descricao2)
+            elif token_gerado.usado:
+                #verifica se o TOKEN já foi usado.
+                descricao2 = 'Token já usado.'
+                return error(request, descricao2)
+            elif token_gerado.email != email_informado:
+                #verifica se o email é o mesmo que foi enviado o TOKEN.
+                descricao2 = f'O TOKEN foi enviado para outro E-Mail. No banco: {token_gerado.email} - na sessao: {email_informado} '
+                return error(request, descricao2)
+            else:
+                #valida o TOKEN corretamente
+                token_gerado.usado = True
+                token_gerado.data_uso = timezone.now()
+                token_gerado.save()
+                token_validado = True
+                descricao2 = 'Token validado com sucesso.'
 
-        if token_validado:   
+            descricao = f' Validação do Token: {token_gerado.token} - enviado para o E-Mail: {email_informado} - {descricao2}'
+
+            if token_validado:   
+                adicionar_descricao_log(log_id, descricao)
+                cria_sessao(request, 'token_validado', token_gerado.token)
+                return render(request, 'comum/bbz_home/bbz_home.html')
+            else:
+                return error(request, 'O TOKEN não pode ser validade, por favor, tente novamente mais tarde.')
+            
+        except TokenHome.DoesNotExist:
+            descricao2 = 'Token é diferente do que foi passado. Por favor, informe o token correto.'
+            descricao = f' Validação do Token: {token_gerado.token} - enviado para o E-Mail: {email_informado} - {descricao2}'
             adicionar_descricao_log(log_id, descricao)
-            return render(request, 'comum/bbz_home/bbz_home.html')
-        else:
-            return error(request, 'O TOKEN não pode ser validade, por favor, tente novamente mais tarde.')
-        
-    except TokenHome.DoesNotExist:
-        descricao2 = 'Token é diferente do que foi passado. Por favor, informe o token correto.'
-        descricao = f' Validação do Token: {token_gerado} - enviado para o E-Mail: {email_informado} - {descricao2}'
-        adicionar_descricao_log(log_id, descricao)
-        return error(request, descricao2)
+            return error(request, descricao2)
+    else:
+        return render(request, 'comum/bbz_home/bbz_home.html')
 
 def valida_email(request):
     pass    

@@ -4,6 +4,9 @@
 {% block content %}
 <script type='text/javascript'>
 
+		var pagina_atual = document.getElementById('pagina_atual');
+        pagina_atual.innerHTML = ' <a href="{% url "lista_condominio_unidades_por_cpf" %}"><li class="text-muted text-hover-primary"> Unidades /</li></a> <li class="breadcrumb-item text-gray-900"> Boletos </li>';
+
     function enviaForm2(){
         location.href='https://bbz.com.br/home/logout.php';
     }

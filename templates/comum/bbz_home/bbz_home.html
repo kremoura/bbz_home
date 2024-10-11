@@ -3,6 +3,10 @@
 {% load static %}
 
 {% block content %}
+		<script language="javascript">
+			var pagina_atual = document.getElementById('pagina_atual');
+			pagina_atual.style.display = 'none';
+		</script>
 		<!--begin::Theme mode setup on page load-->
 		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
 		<!--end::Theme mode setup on page load-->
@@ -24,87 +28,78 @@
 							<!--end::Link-->
 						</div>
 						<table>
-							<div>
-								<tr>
-									<td>
-										<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-barcode fs-2hx">
-												<span class="path1"></span>
-												<span class="path2"></span>
-												<span class="path3"></span>
-												<span class="path4"></span>
-												<span class="path5"></span>
-												<span class="path6"></span>
-												<span class="path7"></span>
-												<span class="path8"></span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										Boleto
-									</td>
-									<td>
-										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-element-11 fs-2hx">
-												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
-												</span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										CND Simples
-									</td>
-								</tr>
-							</div>
-							
-							<div>
-								<tr>
-									<td>
-										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-element-11 fs-2hx">
-												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
-												</span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										CND Autenticada
-									</td>
-									<td>
-										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-element-11 fs-2hx">
-												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
-												</span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										Atualização de cadastro
-									</td>
-								</tr>
-							</div>
+							<div class="row">
+								<div class="col-lg-4">
+									<!-- inicio::TabelaCards -->
+									<table>
+										<tr>
+											<td>
+												<!--begin::Card-->
+												<div class="card  overlay overflow-hidden">
+													<div class="card-body p-0">
+														<div class="overlay-wrapper">
+															<img src="{% static 'assets/imagem/stock/600x400/img-1.jpg' %}" alt="" class="w-100 rounded"/>
+														</div>
+														<div class="overlay-layer bg-dark bg-opacity-25">
+															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Boleto</a>
+														</div>
+													</div>
+												</div>
+												<!--end::Card-->
+											</td>
+											<td>
+												<!--begin::Card-->
+												<div class="card  overlay overflow-hidden">
+													<div class="card-body p-0">
+														<div class="overlay-wrapper">
+															<img src="{% static 'assets/imagem/stock/600x400/img-2.jpg' %}" alt="" class="w-100 rounded"/>
+														</div>
+														<div class="overlay-layer bg-dark bg-opacity-25">
+															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">CND</a>
+														</div>
+													</div>
+												</div>
+												<!--end::Card-->
+											</td>
+										</tr>
 
-							<div>
-								<tr>
-									<td>
-										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-folder fs-2hx">
-												<span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4">
-												</span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										Pasta Nuvem
-									</td>
-									<td>
-										<a href="#" class="btn btn-icon btn-light pulse pulse-primary">
-											<i class="ki-duotone ki-folder-added fs-2hx">
-												<span class="path1"></span>
-												<span class="path2"></span>
-												<span class="path3"></span>
-												<span class="path4"></span>
-											</i>
-											<span class="pulse-ring border-5"></span>
-										</a>
-										Pasta de prestação de contas
-									</td>
-								</tr>
+
+										<!-- inicio::Card 2 -->
+										<tr></tr>
+											<td>
+												<!--begin::Card-->
+												<div class="card  overlay overflow-hidden">
+													<div class="card-body p-0">
+														<div class="overlay-wrapper">
+															<img src="{% static 'assets/imagem/stock/600x400/img-3.jpg' %}" alt="" class="w-100 rounded"/>
+														</div>
+														<div class="overlay-layer bg-dark bg-opacity-25">
+															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Pasta Nuvem</a>
+														</div>
+													</div>
+												</div>
+												<!--end::Card-->
+											</td>
+											<td>
+												<!--begin::Card-->
+												<div class="card  overlay overflow-hidden">
+													<div class="card-body p-0">
+														<div class="overlay-wrapper">
+															<img src="{% static 'assets/imagem/stock/600x400/img-4.jpg' %}" alt="" class="w-100 rounded"/>
+														</div>
+														<div class="overlay-layer bg-dark bg-opacity-25">
+															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Pasta Prest. Contas</a>
+														</div>
+													</div>
+												</div>
+												<!--end::Card-->
+											</td>
+										</tr>
+										<!-- fim::Card 2-->
+
+									</table>
+									<!-- Fim::TabelaCards -->
+								</div>
 							</div>
 						</table>
 					</div>
