@@ -2,132 +2,68 @@
 {% load static %}
 
 {% block content %}
+<script>
 
+    function proximaPagina(){
+        var form = $("#form_dados_condominio");
+        var dados = form.serialize();
+        $.ajax({
+            type: "GET",
+            url: "{% url 'cria_sessao_form_passo1' %}",
+            data: dados,
+            success: function(data){
+                $("#kt_tab_pane_5").html(data);
+                $("#escolha_2").css("display", "block");
+                $("#escolha_2").addClass("nav-link active");
+                $("#escolha_1").removeClass("active").addClass("nav-link");
+            },
+            error: function(data){
+                console.log(data);
+            }
+        });
+    }
+</script>
+<form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data" name="form_dados_condominio" id="form_dados_condominio">
+{% csrf_token %}
+    <div style="margin-left: 130px;" style="width: 700px;">
+        <!--begin::Tabs-->
+        <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
+            <li class="nav-item">
+                <a class="nav-link active" id="escolha_1" data-bs-toggle="tab" href="#kt_tab_pane_4">Dados do condomínio</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6">Editar Contatos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="escolha_2" data-bs-toggle="tab" href="#kt_tab_pane_5">Escolha o que deseja Alterar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_7">Alterar Proprietário</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Alterar Inquilino</a>
+            </li>
+        </ul>
 
-                            <!--begin::Item-->
-                            <div data-kt-stepper-element="content">
-                                <div class="w-100 text-center">
-                                    <h2>Serão solicitadas as seguintes informações, as quais são obrigatórias:</h2><br />
-                                    <h4>Foi gerado um ticket nº 90837428094572</h4>
-                                    <div class="w-lg-w-lg-900px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
-                                        <!--begin::Accordion-->
-                                        <div class="accordion accordion-icon-collapse" id="kt_accordion_3">
-                                            <!--begin::Item-->
-                                            <div class="mb-5">
-                                                <!--begin::Header-->
-                                                <div class="accordion-header py-3 d-flex collapsed" data-bs-toggle="collapse" data-bs-target="#kt_accordion_3_item_1">
-                                                    <span class="accordion-icon">
-                                                        <i class="ki-duotone ki-plus-square fs-3 accordion-icon-off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                        <i class="ki-duotone ki-minus-square fs-3 accordion-icon-on"><span class="path1"></span><span class="path2"></span></i>
-                                                    </span>
-                                                    <h3 class="fs-4 fw-semibold mb-0 ms-4">Alteração de proprietário</h3>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Body-->
-                                                <div id="kt_accordion_3_item_1" class="collapse fs-6 ps-10" data-bs-parent="#kt_accordion_3">
-                                                    <h2>Serão solicitados os seguintes documentos, os quais são obrigatórios:</h2><br />
-                                                        
-                                                            1º) Contrato de compra e venda / IPTU atualizado / Registro de imóveis.<br />
-                                                            2º) Documento do proprietário (RG/CNH/CNPJ).<br />
-                                                            3º) CPF/CNPJ do novo proprietário.<br />
-                                                            4º) E-mail do novo proprietário.<br />
-                                                            5º) Endereço de cobrança.<br />
-                                                            <br />
-                                                            OBS.: Essa funcionalidade, serve apenas para atualizar os dados do proprietário.<br />
-                                                        
-                                                    
-                                                    <br />
-                                                    <a href="{% url 'alterar_proprietario' %}" class="btn btn-icon-primary btn-text-primary">
-                                                        <i class="ki-duotone ki-graph-3 fs-1"><span class="path1"></span><span class="path2"></span></i>
-                                                        Seguir
-                                                    </a>
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
-                                            <!--end::Item-->
-
-                                            <!--begin::Item-->
-                                            <div class="mb-5">
-                                                <!--begin::Header-->
-                                                <div class="accordion-header py-3 d-flex collapsed" data-bs-toggle="collapse" data-bs-target="#kt_accordion_3_item_2">
-                                                    <span class="accordion-icon">
-                                                    <i class="ki-duotone ki-plus-square fs-3 accordion-icon-off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                    <i class="ki-duotone ki-minus-square fs-3 accordion-icon-on"><span class="path1"></span><span class="path2"></span></i>
-                                                    </span>
-                                                    <h3 class="fs-4 fw-semibold mb-0 ms-4">Atualizar dados do do Locatário</h3>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Body-->
-                                                <div id="kt_accordion_3_item_2" class="collapse fs-6 ps-10" data-bs-parent="#kt_accordion_3">
-                                                    <h2>Serão solicitados os seguintes documentos, os quais são obrigatórios:</h2><br />
-                                                        
-                                                            1º) Contrato de locação devidamente assinado.<br />
-                                                            2º) Documento do locatário (RG/CNH/CNPJ).<br />
-                                                            3º) CPF/CNPJ do locatário.<br />
-                                                            4º) E-mail locatário.<br />
-                                                            5º) Endereço de cobrança.<br />
-                                                            6º) Formato de desmembramento das taxas.<br />
-                                                            7º) Termo de rescisão do contrato, (exclusão).<br />
-                                                            8º) Data de encerramento do contrato, (exclusão).<br />
-                                                            <br />
-                                                            OBS.: Essa funcionalidade, serve apenas para atualizar os dados do locatário.<br />
-                                                        
-                                                    
-                                                    <br />
-                                                    <a href="{% url 'alterar_locatario' %}" class="btn btn-icon-primary btn-text-primary">
-                                                        <i class="ki-duotone ki-graph-3 fs-1"><span class="path1"></span><span class="path2"></span></i>
-                                                        Seguir
-                                                    </a>
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
-                                            <!--end::Item-->
-
-                                            <!--begin::Item-->
-                                            <div class="mb-5">
-                                                <!--begin::Header-->
-                                                <div class="accordion-header py-3 d-flex collapsed" data-bs-toggle="collapse" data-bs-target="#kt_accordion_3_item_3">
-                                                    <span class="accordion-icon">
-                                                    <i class="ki-duotone ki-plus-square fs-3 accordion-icon-off"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
-                                                    <i class="ki-duotone ki-minus-square fs-3 accordion-icon-on"><span class="path1"></span><span class="path2"></span></i>
-                                                    </span>
-                                                    <h3 class="fs-4 fw-semibold mb-0 ms-4">Atualizar dados de contato</h3>
-                                                </div>
-                                                <!--end::Header-->
-
-                                                <!--begin::Body-->
-                                                <div id="kt_accordion_3_item_3" class="collapse fs-6 ps-10" data-bs-parent="#kt_accordion_3">
-                                                    <h2>Serão solicitadas as seguintes informações, as quais são obrigatórias:</h2><br />
-                                                        
-                                                            1) Nome do responsável atual,(proprietário ou locatário).<br />
-                                                            2) Documento do responsável atual, (RG/CNH/CNPJ).<br />
-                                                            3) Endereço do condomínio.<br />
-                                                            4) Unidade.<br />
-                                                            5) Novos dados de contato (telefone/e-mail/endereço de cobrança)<br />
-                                                            <br />
-                                                            OBS.: Essa funcionalidade, serve apenas para atualizar os dados como E-Mail e/ou Telefone de contato.<br />
-                                                        
-                                    
-                                                    <br />
-                                                    <a href="{% url 'alterar_dados' %}" class="btn btn-icon-primary btn-text-primary">
-                                                        <i class="ki-duotone ki-graph-3 fs-1"><span class="path1"></span><span class="path2"></span></i>
-                                                        Seguir
-                                                    </a>
-                                                </div>
-                                                <!--end::Body-->
-                                            </div>
-                                            <!--end::Item-->
-                                        </div>
-                                        <!--end::Accordion-->
-
-
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--end::Item-->
-
-
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="kt_tab_pane_4" role="tabpanel">
+                {% include 'cadastro/dados_condominio.html' %}
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_5" role="tabpanel">
+                {% include 'cadastro/selecao_desejada.html' %}
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_6" role="tabpanel">
+                {% include 'cadastro/novos_alterar_dados.html' %}
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_7" role="tabpanel">
+                Alterar Proprietário
+            </div>
+            <div class="tab-pane fade" id="kt_tab_pane_8" role="tabpanel">
+                Alterar Inquilino
+            </div>
+        </div>
+        <!--end::Tabs-->
+        <div id="conteudo"></div> 
+    </div>
+</form>
 {% endblock %}

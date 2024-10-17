@@ -9,101 +9,57 @@
 		</script>
 		<!--begin::Theme mode setup on page load-->
 		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
-		<!--end::Theme mode setup on page load-->
 		<!--begin::Main-->
-		<div class="d-flex flex-column flex-root">
-			<!--begin::Authentication - Sign-in -->
-			<div class="d-flex flex-column flex-column-fluid bgi-position-y-bottom position-x-center bgi-no-repeat bgi-size-contain bgi-attachment-fixed" style="background-image: url({% static 'assets/imagem/illustrations/sigma-1/14.png' %})">
-				<!--begin::Content-->
-				<div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
-					<!--begin::Wrapper-->
-					<div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
-						<!--begin::Heading-->
-						<div class="text-center mb-10">
-							<!--begin::Title-->
-							<h1 class="text-gray-900 mb-3">BBZ HOME</h1>
-							<!--end::Title-->
-							<!--begin::Link-->
-							<div class="text-gray-500 fw-semibold fs-4">Plataforma autenticada BBZ Boleto, CND e mais…</div>
-							<!--end::Link-->
-						</div>
-						<table>
-							<div class="row">
-								<div class="col-lg-4">
-									<!-- inicio::TabelaCards -->
-									<table>
-										<tr>
-											<td>
-												<!--begin::Card-->
-												<div class="card  overlay overflow-hidden">
-													<div class="card-body p-0">
-														<div class="overlay-wrapper">
-															<img src="{% static 'assets/imagem/stock/600x400/img-1.jpg' %}" alt="" class="w-100 rounded"/>
-														</div>
-														<div class="overlay-layer bg-dark bg-opacity-25">
-															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Boleto</a>
-														</div>
-													</div>
-												</div>
-												<!--end::Card-->
-											</td>
-											<td>
-												<!--begin::Card-->
-												<div class="card  overlay overflow-hidden">
-													<div class="card-body p-0">
-														<div class="overlay-wrapper">
-															<img src="{% static 'assets/imagem/stock/600x400/img-2.jpg' %}" alt="" class="w-100 rounded"/>
-														</div>
-														<div class="overlay-layer bg-dark bg-opacity-25">
-															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">CND</a>
-														</div>
-													</div>
-												</div>
-												<!--end::Card-->
-											</td>
-										</tr>
-
-
-										<!-- inicio::Card 2 -->
-										<tr></tr>
-											<td>
-												<!--begin::Card-->
-												<div class="card  overlay overflow-hidden">
-													<div class="card-body p-0">
-														<div class="overlay-wrapper">
-															<img src="{% static 'assets/imagem/stock/600x400/img-3.jpg' %}" alt="" class="w-100 rounded"/>
-														</div>
-														<div class="overlay-layer bg-dark bg-opacity-25">
-															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Pasta Nuvem</a>
-														</div>
-													</div>
-												</div>
-												<!--end::Card-->
-											</td>
-											<td>
-												<!--begin::Card-->
-												<div class="card  overlay overflow-hidden">
-													<div class="card-body p-0">
-														<div class="overlay-wrapper">
-															<img src="{% static 'assets/imagem/stock/600x400/img-4.jpg' %}" alt="" class="w-100 rounded"/>
-														</div>
-														<div class="overlay-layer bg-dark bg-opacity-25">
-															<a href="{% url 'lista_condominio_unidades_por_cpf' %}" class="btn btn-primary btn-shadow">Pasta Prest. Contas</a>
-														</div>
-													</div>
-												</div>
-												<!--end::Card-->
-											</td>
-										</tr>
-										<!-- fim::Card 2-->
-
-									</table>
-									<!-- Fim::TabelaCards -->
-								</div>
+			<!--begin::Block-->
+				<div style="margin-left: 101px; margin-top: 10px;"
+					class="py-5">
+					<div class="rounded p-10">
+						<!--begin::Title-->
+						<a href="#" class="text-dark fw-bold fs-2 text-hover-primary">Plataforma autenticada BBZ Boleto, CND e mais…</a>
+						<!--end::Title-->
+						<!--begin::Desc-->
+						<p class="pt-5 fw-semibold text-gray-600 fs-5"></p>
+						<!--end::Desc-->
+						<div class="nav align-items-center">
+							<div class="opacity-state-75  text-white w-101px h-150px d-flex flex-center p-3 me-5 mb-5 fw-semibold" data-bs-toggle="tab">
+								<!--begin::Boleto-->
+								<a href="{% url 'lista_condominio_unidades_por_cpf' %}?tools=1" class="symbol symbol-150px me-2" data-bs-toggle="tooltip" title="Boleto">           
+									<img src="{% static 'assets/imagem/stock/600x400/img-1.jpg' %}" alt="" class="w-100 rounded"/>            
+								</a>
+								<!--end::Boleto-->  
 							</div>
-						</table>
+							<div class="opacity-state-75 text-white w-101px h-150px d-flex flex-center p-3 me-5 mb-5 fw-semibold" data-bs-toggle="tab">
+								<!--begin::CND-->
+								<a href="{% url 'lista_condominio_unidades_por_cpf' %}?tools=2" class="symbol symbol-150px me-2" data-bs-toggle="tooltip" title="CND">                
+									<img src="{% static 'assets/imagem/stock/600x400/img-2.jpg' %}" alt="" class="w-100 rounded"/>                 
+								</a>
+								<!--end::CND-->
+							</div>
+							<div class="opacity-state-75  text-white w-101px h-150px d-flex flex-center p-3 me-5 mb-5 fw-semibold" data-bs-toggle="tab">
+								<!--begin::Pasta Nuvem-->
+								<a href="{% url 'lista_condominio_unidades_por_cpf' %}?tools=3" class="symbol symbol-150px me-2" data-bs-toggle="tooltip" title="Pasta Nuvem">                
+									<img src="{% static 'assets/imagem/stock/600x400/img-3.jpg' %}" alt="" class="w-100 rounded"/>                
+								</a>
+								<!--end::Pasta Nuvem-->  
+							</div>
+							<div class="opacity-state-75  text-white w-101px h-150px d-flex flex-center p-3 me-5 mb-5 fw-semibold" data-bs-toggle="tab">
+								<!--begin::Pasta de prestação de contas-->
+								<a href="{% url 'lista_condominio_unidades_por_cpf' %}?tools=4" class="symbol symbol-150px me-2" data-bs-toggle="tooltip" title="Pasta de prestação de contas">                
+									<img src="{% static 'assets/imagem/stock/600x400/img-4.jpg' %}" alt="" class="w-100 rounded"/>                 
+								</a>
+								<!--end::Pasta de prestação de contas--> 
+							</div>
+							<div class="nav-link opacity-state-100 text-white w-101px h-150px d-flex flex-center p-3 me-5 mb-5 fw-semibold" data-bs-toggle="tab">
+								<!--begin::Altereção Cadastral-->
+								<a href="{% url 'cad_index' %}?tools=5" class="symbol symbol-150px me-2" data-bs-toggle="tooltip" title="Alteração Cadastral">                
+									<img src="{% static 'assets/imagem/stock/600x400/img-5.jpg' %}" alt="" class="w-100 rounded"/>                 
+								</a>
+								<!--end::Altereção Cadastral--> 
+							</div>
+							
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>				
+			<!--end::Block-->
+		<!--end::Main-->
 {% endblock %}

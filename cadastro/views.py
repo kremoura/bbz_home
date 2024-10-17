@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 def cad_index(request):
     return render(request, 'cadastro/lgpd.html')
@@ -54,3 +54,15 @@ def teste_km(request):
     retorno = get_dados_atualizacao(request)
 
     return HttpResponse(retorno)
+
+def cria_sessao_form_passo1(request):
+
+    print('GET:')
+    for key, value in request.GET.items():
+        print(f'{key}: {value}')
+
+    if request.method == "GET":
+        request.session['sessao_formulario'] = request.GET
+        return JsonResponse({'success': True})
+    else:
+        return JsonResponse({'success': False})

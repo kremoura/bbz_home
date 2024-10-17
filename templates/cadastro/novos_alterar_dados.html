@@ -54,57 +54,62 @@
     });
     }, 300);
     });
+
+    // The DOM elements you wish to replace with Tagify
+    var input = document.querySelector("#kt_tagify");
+
+    // Initialize Tagify components on the above inputs
+    new Tagify(input);
 </script>
-<div class="table-responsive">
+<div class="table-responsive" style="width: 550px;">
     <table class="table gs-7 gy-7 gx-7">
         <h2>O que deseja alterar</h1><br />
             
                
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="new_owner" id="new_owner" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="proprietario" id="new_owner" placeholder="João da Silva"/>
                         <label for="floatingInput">Nome do proprietário novo</label>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="type_owner" id="type_owner" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="tipo_pessoa" id="type_owner" placeholder="name@example.com"/>
                         <label for="floatingInput">Pessoa fisica ou juritica</label>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="new_cpf_cnpj" id="new_cpf_cnpj" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="cnpj_cpf_novo" id="new_cpf_cnpj" placeholder="name@example.com"/>
                         <label for="floatingInput">CPF/CNPJ</label>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="new_phone" id="new_phone" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="novo_telefone" id="new_phone" placeholder="name@example.com"/>
                         <label for="floatingInput">Telefone</label>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="new_email" id="new_email" placeholder="name@example.com"/>
-                        <label for="floatingInput">E-mail do Proprietário</label>
+                        <input class="form-control form-control-lg form-control-solid" placeholder="Insira o E-Mail" value="tag1, tag2, tag3" id="kt_tagify"/>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="tax" id="tax" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="forma_desmembramento_taxa" id="tax" placeholder="Proprietário, Locatario, ambos"/>
                         <label for="floatingInput">Formato de desmembramento das taxas(proprietário, locatario, ambos)</label>
                     </div>
                     <!--end::Input group NOVO EMAIL-->
 
                     <!--begin::Input group NOVO EMAIL-->
                     <div class="form-floating mb-7">
-                        <input type="email" class="form-control" name="spoils" id="spoils" placeholder="name@example.com"/>
+                        <input type="email" class="form-control" name="espolio" id="espolio" placeholder="name@example.com"/>
                         <label for="floatingInput">Espólio/ Inventário/ Partilha de Bens/ Procuração judicial:
                         </label>
                     </div>
@@ -134,7 +139,6 @@
                                         <a class="dropzone-remove-all btn btn-sm btn-light-primary">Remova todos</a>
                                     </div>
                                     <!--end::Controls-->
-
                                     <!--begin::Items-->
                                     <div class="dropzone-items wm-200px">
                                         <div class="dropzone-item" style="display:none">
@@ -148,7 +152,6 @@
                                                 <div class="dropzone-error" data-dz-errormessage></div>
                                             </div>
                                             <!--end::File-->
-
                                             <!--begin::Progress-->
                                             <div class="dropzone-progress">
                                                 <div class="progress">
@@ -159,7 +162,6 @@
                                                 </div>
                                             </div>
                                             <!--end::Progress-->
-
                                             <!--begin::Toolbar-->
                                             <div class="dropzone-toolbar">
                                                 <span class="dropzone-delete" data-dz-remove><i class="bi bi-x fs-1"></i></span>
@@ -170,7 +172,6 @@
                                     <!--end::Items-->
                                 </div>
                                 <!--end::Dropzone-->
-
                                 <!--begin::Hint-->
                                 <span class="form-text text-muted">Tamanho maximo do arquivo é 1MB e o número maximo é 5.</span>
                                 <!--end::Hint-->
@@ -179,8 +180,6 @@
                         </div>
                         <!--end::Input group-->
                     <!--End uploader-->
-            
-
                     <!--end::Input group Enviar Arquivos-->
                     <br />
                      <!--begin::Input group Info Add-->
@@ -189,7 +188,5 @@
                         <label for="floatingInput">Deseja fornecer alguma informação adicional?</label>
                     </div>
                      <!--end::Input group Info Add-->
-
-               
     </table>
 </div>

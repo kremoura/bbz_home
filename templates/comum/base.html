@@ -14,33 +14,12 @@
 				limitReachedClass: "badge badge-success"
 			});    
 		</script>
-		<!--end::Theme mode setup on page load-->
-		<!--begin::Main-->
 		{% include 'comum/partial/_menu.html' %}
 		<!--begin::Content-->
-<div class="content d-flex flex-column flex-column-fluid" id="kt_content" style="width: 1000px;">
-    <!--begin::Container-->
-    <div class="container-xxl" id="kt_content_container">
-        <!--begin::Row-->
-        <div class="row g-5 gx-xxl-8 mb-xxl-3">
-            <div class="col-xxl-2"></div>
-            <!--begin::Col-->
-            <div class="col-xxl-8">
-                <!--begin::Engage Widget 1-->
-                
-
-        {% block content %}{% endblock %}
-
-						
-
-
-            </div>
+        <div style="margin-top: 0px;" class="">
+        	{% block content %}{% endblock %}
+		<!--end::Content-->
         </div>
-    </div>
-</div>
-
-
-
 		{% include 'comum/partial/_footer.html' %}
     </body>
 	<!--end::Body-->

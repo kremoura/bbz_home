@@ -2,17 +2,15 @@
 {% load static %}
 
 {% block content %}
-<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
 <div class="card card-xxl-stretch" style="width: 550px;">
     <!--begin::Card body-->
     <div class="card-body d-flex flex-column justify-content-between h-100">
         <!--begin::Card-->
 			<div class="card">
 				<!--begin::Card body-->
-				<div class="card-body pt-0">
+				<div class="card-body pt-0"> 
         <!--begin::Section-->
         <div class="pt-12">
-                    <script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
                     <form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="table-responsive">

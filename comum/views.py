@@ -31,14 +31,21 @@ def bbz_home(request):
 
     if not cnpj_cpf:
         return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
+    
+    token_gerado = None
+    token_validado = False
+    
+    try:
+        if 'numero_token' in request.session:
+            token_gerado = TokenHome.objects.get(token=request.session.get('numero_token'))
+            return render(request, 'comum/bbz_home/bbz_home.html')
 
-    if 'token_validado' not in request.session:
-        try:
+        elif 'numero_token' in request.POST:
             token_gerado = TokenHome.objects.get(token=request.POST.get('numero_token'))
 
             #atualiza o Log
             descricao2 = ''
-            token_validado = False
+            descricao = f' Validação do Token: {token_gerado} - enviado para o E-Mail: {email_informado} - {descricao2}'
 
             if timezone.now() > token_gerado.validade:
                 # a data e hora atual é posterior ao campo validade
@@ -59,23 +66,22 @@ def bbz_home(request):
                 token_gerado.save()
                 token_validado = True
                 descricao2 = 'Token validado com sucesso.'
-
-            descricao = f' Validação do Token: {token_gerado.token} - enviado para o E-Mail: {email_informado} - {descricao2}'
-
-            if token_validado:   
-                adicionar_descricao_log(log_id, descricao)
-                cria_sessao(request, 'token_validado', token_gerado.token)
-                return render(request, 'comum/bbz_home/bbz_home.html')
+                cria_sessao(request, 'numero_token', token_gerado.token) 
+        
+            if isinstance(token_gerado,  TokenHome):
+                if token_validado:   
+                    adicionar_descricao_log(log_id, descricao)
+                    return render(request, 'comum/bbz_home/bbz_home.html')
+                else:
+                    return error(request, 'O TOKEN não pode ser validade, por favor, tente novamente mais tarde.')
             else:
                 return error(request, 'O TOKEN não pode ser validade, por favor, tente novamente mais tarde.')
-            
-        except TokenHome.DoesNotExist:
-            descricao2 = 'Token é diferente do que foi passado. Por favor, informe o token correto.'
-            descricao = f' Validação do Token: {token_gerado.token} - enviado para o E-Mail: {email_informado} - {descricao2}'
-            adicionar_descricao_log(log_id, descricao)
-            return error(request, descricao2)
-    else:
-        return render(request, 'comum/bbz_home/bbz_home.html')
+        
+    except TokenHome.DoesNotExist:
+        descricao2 = 'Token é diferente do que foi passado. Por favor, informe o token correto.'
+        descricao = f' Validação do Token: nao existe o token - enviado para o E-Mail: {email_informado} - {descricao2}'
+        adicionar_descricao_log(log_id, descricao)
+        return error(request, descricao2)
 
 def valida_email(request):
     pass    
@@ -88,12 +94,34 @@ def error(request, error=None):
 
     return render(request, 'error/error.html', {'error': error})
 
-def cria_sessao(request, indice, valor):
+def cria_sessao(request, indice, valor, tempo_expiracao=2):
+    """
+    Cria uma sess o no request.
+
+    :param request: O request que ir  ter a sess o criada.
+    :param str indice: O indice da sess o a ser criada.
+    :param valor: O valor a ser atribuido a sess o.
+    :param int tempo_expiracao: O tempo de expira o da sess o em horas. Padrao: 2 horas.
+    """
     if isinstance(valor, list):
         for v in valor:
             request.session[indice] = v
+            request.session.set_expiry(tempo_expiracao * 60 * 60)
     else:
         request.session[indice] = valor
+        request.session.set_expiry(tempo_expiracao * 60 * 60)
+
+def exclui_sessao(request, indice):
+    """
+    Exclui uma sess o no request.
+
+    :param request: O request que ir  ter a sess o excluida.
+    :param str indice: O indice da sess o a ser excluida.
+    """
+    try:
+        del request.session[indice]
+    except KeyError:
+        pass
 
 def valida_documento(documento):
     """
@@ -250,7 +278,9 @@ def lista_condominio_unidades_por_cpf(request):
         return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
     
     try:
-        lista_unidades = get_unidades_api(cnpj_cpf)
+        lista_unidades = get_unidades_api(request, cnpj_cpf)
+
+        print(lista_unidades)
         
         return render(request, 'comum/lists/lista_unidades_por_cpf.html', {'lista_unidades': lista_unidades})
     except Exception as e:

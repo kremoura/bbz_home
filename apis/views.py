@@ -4,13 +4,12 @@ from zeep.transports import Transport
 from requests import Session
 from requests.adapters import HTTPAdapter
 from datetime import datetime, timedelta
-import xml.etree.ElementTree as ET
-from io import BytesIO
 
-import os
 import requests
 import json
 import xmltodict
+
+from prestacao_contas.views import get_service_account_sheets_service, link_pasta_nuvem
 
 
 def verificar_intranet_ou_internet():
@@ -164,7 +163,7 @@ def cria_client_soap(link='condoweb'):
 
     return client
 
-def get_unidades_api(cnpj_cpf):
+def get_unidades_api(request, cnpj_cpf):
 
     #client SOAP
     client = cria_client_soap()
@@ -188,6 +187,8 @@ def get_unidades_api(cnpj_cpf):
 
         situacao = 1
 
+        service = get_service_account_sheets_service()
+
         for condominio in resultado_json['Condominio']:
             if situacao  == 1:
                 situacao = 'adimplente'
@@ -199,12 +200,16 @@ def get_unidades_api(cnpj_cpf):
             elif condominio['tipo'] == 'P':
                 tipo = 'Proprietário'
 
+            pastas = link_pasta_nuvem(request,service, condominio['condominio'])
+
             api_lista_unidades = {
                 'nome_condominio': condominio['nome'],
                 'bloco': condominio['bloco'],
                 'unidade': condominio['unidade'],
                 'tipo': tipo,
                 'condominio': condominio['condominio'],
+                'pasta_nuvem_id': pastas.get('pasta_nuvem_id'),
+                'pasta_prest_contas_id': pastas.get('pasta_prest_contas_id'),
             }
 
             lista_unidades.append(api_lista_unidades)

@@ -1,0 +1,140 @@
+<script language="javascript">
+
+    // set the dropzone container id
+const id = "#kt_dropzonejs_example_3";
+const dropzone = document.querySelector(id);
+
+// set the preview element template
+var previewNode = dropzone.querySelector(".dropzone-item");
+previewNode.id = "";
+var previewTemplate = previewNode.parentNode.innerHTML;
+previewNode.parentNode.removeChild(previewNode);
+
+var myDropzone = new Dropzone(id, { // Make the whole body a dropzone
+url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
+parallelUploads: 20,
+maxFilesize: 1, // Max filesize in MB
+previewTemplate: previewTemplate,
+previewsContainer: id + " .dropzone-items", // Define the container to display the previews
+clickable: id + " .dropzone-select" // Define the element that should be used as click trigger to select files.
+});
+
+myDropzone.on("addedfile", function (file) {
+// Hookup the start button
+const dropzoneItems = dropzone.querySelectorAll('.dropzone-item');
+dropzoneItems.forEach(dropzoneItem => {
+dropzoneItem.style.display = '';
+});
+});
+
+// Update the total progress bar
+myDropzone.on("totaluploadprogress", function (progress) {
+const progressBars = dropzone.querySelectorAll('.progress-bar');
+progressBars.forEach(progressBar => {
+progressBar.style.width = progress + "%";
+});
+});
+
+myDropzone.on("sending", function (file) {
+// Show the total progress bar when upload starts
+const progressBars = dropzone.querySelectorAll('.progress-bar');
+progressBars.forEach(progressBar => {
+progressBar.style.opacity = "1";
+});
+});
+
+// Hide the total progress bar when nothing"s uploading anymore
+myDropzone.on("complete", function (progress) {
+const progressBars = dropzone.querySelectorAll('.dz-complete');
+
+setTimeout(function () {
+progressBars.forEach(progressBar => {
+progressBar.querySelector('.progress-bar').style.opacity = "0";
+progressBar.querySelector('.progress').style.opacity = "0";
+});
+}, 300);
+});
+</script>
+<div class="table-responsive">
+<table class="table gs-7 gy-7 gx-7">
+    <h2>O que deseja alterar</h2><br />
+    <div data-kt-buttons="true">
+        <!--begin::Radio button-->
+        <label style="width: 50%" class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6 mb-5 active">
+            <!--end::Description-->
+            <div class="d-flex align-items-center me-2">
+                <!--begin::Radio-->
+                <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                    <input class="form-check-input" type="radio" checked="checked" name="plan" value="startup"/>
+                </div>
+                <!--end::Radio-->
+
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                    <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                        Dados comuns(E-Mail, telefone, endereço, etc.)(Incluir, Alterar ou Excluir)
+                    </h2>
+                    <div class="fw-semibold opacity-50">
+                        Será enviado um email com Token para confirmação da alterção, que poderá ser automática.
+                    </div>
+                </div>
+                <!--end::Info-->
+            </div>
+            <!--end::Description-->
+        </label>
+        <!--end::Radio button-->
+
+        <!--begin::Radio button-->
+        <label style="width: 50%" class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6 mb-5">
+            <!--end::Description-->
+            <div class="d-flex align-items-center me-2">
+                <!--begin::Radio-->
+                <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                    <input class="form-check-input" type="radio" name="plan" value="advanced"/>
+                </div>
+                <!--end::Radio-->
+
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                    <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                        Alterar proprietário
+                        <span class="badge badge-light-success ms-2 fs-7"></span>
+                    </h2>
+                    <div class="fw-semibold opacity-50">
+                        Será pedido alguns documentos comprobatorios 
+                    </div>
+                </div>
+                <!--end::Info-->
+            </div>
+            <!--end::Description-->
+        </label>
+        <!--end::Radio button-->
+
+        <!--begin::Radio button-->
+        <label style="width: 50%" class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex flex-stack text-start p-6">
+            <!--end::Description-->
+            <div class="d-flex align-items-center me-2">
+                <!--begin::Radio-->
+                <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
+                    <input class="form-check-input" type="radio" name="plan" value="enterprise"/>
+                </div>
+                <!--end::Radio-->
+
+                <!--begin::Info-->
+                <div class="flex-grow-1">
+                    <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
+                        Alterar inquilino
+                    </h2>
+                    <div class="fw-semibold opacity-50">
+                        Será pedido alguns documentos comprobatorios 
+                    </div>
+                </div>
+                <!--end::Info-->
+            </div>
+            <!--end::Description-->
+        </label>
+        <!--end::Radio button-->
+    </div>
+    <!--end::Radio group-->
+</table>
+</div>

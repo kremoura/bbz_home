@@ -4,6 +4,8 @@ from googleapiclient.discovery import build
 from django.conf import settings
 from django.shortcuts import render
 
+def pasta_vazia(request):
+    return render(request, 'prestacao_contas/blank.html')
 
 def pasta_prest_conta(request):
     service = get_service_account_drive_service()
@@ -12,27 +14,36 @@ def pasta_prest_conta(request):
 
     if request.method == 'POST':
         is_search = request.POST.get('is_search')
+        
 
     if is_search:
         partial_name = request.POST.get('search')
         folder_id = request.POST.get('folder_id')
+        condominio = request.POST.get("condominio")
 
         items = search_partial_name(service, partial_name, folder_id)
     else:
         # Defina o ID da pasta específica do Google Drive
-        #folder_id = '0By6djoRj_4OYN1RMVloyRmttNEU'  # Substitua este valor pelo ID da pasta desejada
+        #folder_id = '0By6djoRj_4OYN1RMVloyRmttNEU'
         folder_id = request.GET.get('folder_id')
+        condominio = request.GET.get("condominio")
 
         items = list_drive_files(request, service, folder_id)
 
+    if items == False:
+        return pasta_vazia(request)
+
+        
     folder_name_item = get_folder_name(service, folder_id)
 
     folders_tree = []
     folders = []
     files = []
 
+    nome_sessao_pasta = f'pasta_nuvem{condominio}'
+
     #lista a pasta mãe( Pasta Nuvem )
-    folder_id_mother = '0By6djoRj_4OYN1RMVloyRmttNEU'
+    folder_id_mother = request.session.get(nome_sessao_pasta)
     folders_tree = get_folder_hierarchy_until_target(service, folder_id, folder_id_mother)
 
     qtd = 0
@@ -41,19 +52,26 @@ def pasta_prest_conta(request):
         return "Deu ruim"
     else:
         for item in items:
-            permissions = item.get("permissions", [])
+            #permissions = item.get("permissions", [])
             is_public = False
 
-            for permission in permissions:
-                if permission['type'] == 'anyone':
-                    qtd = qtd + 1
+            # for permission in permissions:
+            #     if permission['type'] == 'anyone':
+            #         qtd = qtd + 1
 
-                    if item['mimeType'] == 'application/vnd.google-apps.folder':
-                        folders.append(item)
-                    else:
-                        files.append(item)
+            #         if item['mimeType'] == 'application/vnd.google-apps.folder':
+            #             folders.append(item)
+            #         else:
+            #             files.append(item)
+
+            qtd = qtd + 1
+
+            if item['mimeType'] == 'application/vnd.google-apps.folder':
+                folders.append(item)
+            else:
+                files.append(item)
        
-    return render(request, 'prestacao_contas/folders.html', {'folders': folders, 'files': files, 'qtd_registros': qtd, 'folder_name': folder_name_item, 'folders_tree': folders_tree})
+    return render(request, 'prestacao_contas/folders.html', {'folders': folders, 'files': files, 'qtd_registros': qtd, 'folder_name': folder_name_item, 'folders_tree': folders_tree, 'condominio': condominio, 'pasta_mae': folder_id_mother})
 
 # Escopo necessário para acessar os arquivos do Google Drive
 SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
@@ -92,7 +110,7 @@ def get_folder_hierarchy_until_target(service, file_id, stop_folder_id):
             # Adicionar o nome da pasta à lista
             final = {'name': file['name'], 'id': file['id']}
             folder_id_name_hierarchy.append(final)
-
+            print(f'current_folder_id: {current_folder_id}, stop_folder_id: {stop_folder_id}')
             # Verificar se a pasta atual é a pasta de parada
             if current_folder_id == stop_folder_id:
                 break
@@ -113,7 +131,6 @@ def get_folder_hierarchy_until_target(service, file_id, stop_folder_id):
     except Exception as e:
         return f"Ocorreu um erro: {str(e)}"
 
-
 def get_service_account_drive_service():
     # Autentica usando a conta de serviço
     creds = Credentials.from_service_account_file(
@@ -123,6 +140,15 @@ def get_service_account_drive_service():
     service = build('drive', 'v3', credentials=creds)
     return service
 
+def get_service_account_sheets_service():
+    # Autentica usando a conta de serviço
+    creds = Credentials.from_service_account_file(
+        settings.GOOGLE_DRIVE_SERVICE_ACCOUNT_FILE, scopes=['https://www.googleapis.com/auth/spreadsheets']
+    )
+    
+    # Conecta ao serviço do Google Sheets
+    service = build('sheets', 'v4', credentials=creds)
+    return service
 # Função recursiva para listar arquivos dentro de uma pasta e suas subpastas
 def list_files_in_folder(service, folder_id):
     # Lista todos os arquivos e subpastas da pasta atual
@@ -206,6 +232,40 @@ def search_partial_name(service, partial_name, folder_id):
     else:
         return items
 
+def link_pasta_nuvem(request, service, condominio):
+    # Busca o ID das pastas de Nuvem e Prestação de Contas
+    # ID do CID-BBZ
+    spreadsheet_id = '10EXJcl45bNYZVTYpZvSe9ITFt5UdFa0yCXdQvL2lA1E'
+    # Range da busca
+    range_name = 'CID!A:L'
+    result = service.spreadsheets().values().get(
+        spreadsheetId=spreadsheet_id, range=range_name).execute()
+    values = result.get('values', [])
+    
+    if values:  # verifica se a lista não está vazia
+        for row in values:
+            if len(row) > 1:  # verifica se a lista tem pelo menos dois elementos
+                if row[1] == str(condominio):
+                    if len(row) > 10:  # verifica se a lista tem pelo menos 11 elementos
 
-        
-        
+                        pasta_nuvem_id = row[10].split('/')[-1].split('?')[0]
+                        pasta_prest_contas_id = row[11].split('/')[-1].split('?')[0]
+
+                        pastas = {'pasta_nuvem_id': pasta_nuvem_id, 'pasta_prest_contas_id': pasta_prest_contas_id}
+
+                        if f'pasta_nuvem{str(condominio)}' in request.session:
+                            del request.session[f'pasta_nuvem{str(condominio)}']
+
+                        if f'pasta_prest_contas{str(condominio)}' in request.session:
+                            del request.session[f'pasta_prest_contas{str(condominio)}']
+
+                        request.session[f'pasta_nuvem{str(condominio)}'] = pasta_nuvem_id
+                        request.session[f'pasta_prest_contas{str(condominio)}'] = pasta_prest_contas_id
+
+                        return pastas
+                    else:
+                        print("A lista não tem pelo menos 11 elementos")
+                        return False
+    
+    print("A lista está vazia")
+    return False

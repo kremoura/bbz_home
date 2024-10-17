@@ -1,0 +1,85 @@
+{% load static %}
+<script>
+    function verifica_check(checked, tipo) {
+        var proprietario =  document.getElementById("proprietario_check");
+        var locatario =  document.getElementById("locatario_check");
+
+        if(tipo == 'proprietario') {
+            if(checked == true) {
+                locatario.checked = false;
+            }else if(checked == false) {
+                proprietario.checked = false;
+            }
+        }else if(tipo == 'locatario') {
+            if(checked == true) {
+                proprietario.checked = false;
+            }else if(checked == false) {
+                locatario.checked = false;
+            }
+        }
+        
+    }
+</script>
+<div  class="card card-xxl-stretch" style="width: 550px;">
+    <!--begin::Card body-->
+    <div class="card-body d-flex flex-column justify-content-between h-100">
+        <!--begin::Card-->
+            <div class="card">
+                <!--begin::Card body-->
+                <div class="card-body pt-0"> 
+        <!--begin::Section-->
+        <div class="pt-12">
+                    <div class="table-responsive">
+                        <table class="table gs-7 gy-7 gx-7">
+                            <table class="table gs-7 gy-7 gx-7">
+                                <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+                                    <input class="form-check-input" onClick="verifica_check(this.checked, 'proprietario')" name="proprietario_check" type="checkbox" value="" checked id="proprietario_check"/>
+                                    <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+                                        Eu sou o Proprietário
+                                    </label>
+                                </div>
+                                <br />
+                                <div class="form-check form-switch form-check-custom form-check-success form-check-solid">
+                                    <input class="form-check-input" onClick="verifica_check(this.checked, 'locatario')" name="locatario_check" type="checkbox" value="" id="locatario_check"/>
+                                    <label class="form-check-label" for="kt_flexSwitchCustomDefault_1_1">
+                                        Eu sou o Locatário
+                                    </label>
+                                </div>
+                                <br />
+                                <!--begin::Input group NOME-->
+                                <div class="form-floating mb-7">
+                                    <input type="name" class="form-control" name="nome_condominio" id="floatingInput" placeholder="Nome do seu condomínio"/>
+                                    <label for="floatingInput">Nome do condomínio/Associação</label>
+                                </div>
+                                <!--end::Input group  NOME-->
+                                <!--begin::Input group CEP-->
+                                {% include 'cadastro/cep.html' %}
+                                <!--end::Input group CEP-->
+                                <!--begin::Input group Bloco-->
+                                <div class="form-floating mb-7">
+                                    <input type="name" class="form-control" name="bloco" id="bloco" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Bloco</label>
+                                </div>
+                                <!--end::Input group Bloco-->
+                                <!--begin::Input group Unidade-->
+                                <div class="form-floating mb-7">
+                                    <input type="name" class="form-control" name="unidade" id="unidade" placeholder="name@example.com"/>
+                                    <label for="floatingInput">Unidade</label>
+                                </div>
+                                <!--end::Input group Unidade-->
+                            </table>
+                        </table>
+                    </div>
+                        <!--end::Input group telefone-->
+                    <div class="form-floating mb-7">
+                        <table>
+                            <tr>
+                                <td><input class="form-floating mb-7 btn btn-primary hover-elevate-up" type="button"  value="Proximo" onClick="proximaPagina()" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>    
+            </div>    
+        </div>        
+    </div>                
+</div>

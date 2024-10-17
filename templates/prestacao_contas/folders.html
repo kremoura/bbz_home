@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="card card-xxl-stretch" style="width: 1060px;">
+<div class="card card-xxl-stretch" style="width: 1060px; padding-left: 101px">
 	<!--begin::Card body-->
 	<div class="card-body d-flex flex-column justify-content-between h-100">
 		<!--begin::Section-->
@@ -69,7 +69,8 @@
 														<td><input name="search" type="text" data-kt-filemanager-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Search Files & Folders" /></td>
 														<td><input class="form-floating mb-7 btn btn-primary hover-elevate-up" type="submit" value="Buscar" /></td>
 														<input hidden name="is_search" value="1" />
-														<input hidden name="folder_id" value="0By6djoRj_4OYN1RMVloyRmttNEU" />
+														<input hidden name="folder_id" value="{{ pasta_mae }}" />
+														<input hidden name="condominio" value="{{ condominio }}" />
 													</tr>
 												</table>
 											</form>
@@ -102,7 +103,7 @@
 													<span class="path2"></span>
 												</i>
 												{% for folder in folders_tree %}
-												<a href="{% url 'pasta_prest_conta' %}?folder_id={{ folder.id }}">{{ folder.name }}</a>
+												<a href="{% url 'pasta_prest_conta' %}?folder_id={{ folder.id }}&condominio={{ condominio }}">{{ folder.name }}</a>
 												<i class="ki-duotone ki-right fs-2 text-primary mx-1"></i>
 												{% endfor %}
 												
@@ -139,7 +140,7 @@
 																<span class="path2"></span>
 															</i>
 														</span>
-														<a href="{% url 'pasta_prest_conta' %}?folder_id={{ folder.id }}" class="text-gray-800 text-hover-primary">{{ folder.name }}</a>
+														<a href="{% url 'pasta_prest_conta' %}?folder_id={{ folder.id }}&condominio={{ condominio }}" class="text-gray-800 text-hover-primary">{{ folder.name }}</a>
 													</div>
 												</td>
 												<td>-</td>
