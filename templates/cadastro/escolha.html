@@ -4,7 +4,7 @@
 {% block content %}
 <script>
 
-    function proximaPagina(){
+    function proximaPaginaold(){
         var form = $("#form_dados_condominio");
         var dados = form.serialize();
         $.ajax({
@@ -22,6 +22,50 @@
             }
         });
     }
+
+    function alterar_dados(){
+    var alterar_dados_check = document.getElementById("alterar_dados_check");
+    var alterar_proprietario_check = document.getElementById("alterar_proprietario_check");
+    var alterar_inquilino_check = document.getElementById("alterar_inquilino_check");
+
+    var editar_contatos = document.getElementById("editar_contatos");
+    var editar_proprietario = document.getElementById("editar_proprietario");
+    var editar_inquilino = document.getElementById("editar_inquilino");
+
+    if(alterar_dados_check.checked){
+        editar_contatos.style.display = "block";
+        editar_proprietario.style.display = "none";
+        editar_inquilino.style.display = "none";
+    }else if(alterar_proprietario_check.checked){
+        editar_contatos.style.display = "block";
+        editar_proprietario.style.display = "block";
+        editar_inquilino.style.display = "none";
+    }else if(alterar_inquilino_check.checked){
+        editar_contatos.style.display = "block";
+        editar_proprietario.style.display = "none";
+        editar_inquilino.style.display = "block";
+    }
+    $("#editar_contatos").tab("show");
+}
+
+    function proximaPagina(){
+        $("#alterar_o_que").tab("show");
+    }
+
+    function proximaPaginaDados(){
+        var alterar_dados_check = document.getElementById("alterar_dados_check");
+        var alterar_proprietario_check = document.getElementById("alterar_proprietario_check");
+        var alterar_inquilino_check = document.getElementById("alterar_inquilino_check");
+
+        if(alterar_dados_check.checked){
+            $("#alterar_o_que").tab("show");
+        }else if(alterar_proprietario_check.checked){
+            $("#alterar_proprietario").tab("show");
+        }else if(alterar_inquilino_check.checked){
+            $("#alterar_inquilino").tab("show");
+        }
+       
+    }
 </script>
 <form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data" name="form_dados_condominio" id="form_dados_condominio">
 {% csrf_token %}
@@ -29,19 +73,19 @@
         <!--begin::Tabs-->
         <ul class="nav nav-tabs nav-line-tabs nav-line-tabs-2x mb-5 fs-6">
             <li class="nav-item">
-                <a class="nav-link active" id="escolha_1" data-bs-toggle="tab" href="#kt_tab_pane_4">Dados do condomínio</a>
-            </li>
-            <li class="nav-item" >
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_6">Editar Contatos</a>
+                <a class="nav-link active" id="dados_condominio" data-bs-toggle="tab" href="#kt_tab_pane_4">Dados do condomínio</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="escolha_2" data-bs-toggle="tab" href="#kt_tab_pane_5">Escolha o que deseja Alterar</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_7">Alterar Proprietário</a>
+                <a class="nav-link" id="alterar_o_que" data-bs-toggle="tab" href="#kt_tab_pane_5">Escolha o que deseja Alterar</a>
             </li>
             <li class="nav-item" >
-                <a class="nav-link" data-bs-toggle="tab" href="#kt_tab_pane_8">Alterar Inquilino</a>
+                <a class="nav-link" style="display: none;" id="editar_contatos" data-bs-toggle="tab" href="#kt_tab_pane_6">Editar Contatos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="display: none;" id="editar_proprietario" data-bs-toggle="tab" href="#kt_tab_pane_7">Alterar Proprietário</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link" style="display: none;" id="editar_inquilino" data-bs-toggle="tab" href="#kt_tab_pane_8">Alterar Inquilino</a>
             </li>
         </ul>
 

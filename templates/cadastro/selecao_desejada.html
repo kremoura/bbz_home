@@ -54,6 +54,7 @@ progressBar.querySelector('.progress').style.opacity = "0";
 });
 }, 300);
 });
+
 </script>
 <div class="table-responsive">
 <table class="table gs-7 gy-7 gx-7">
@@ -65,11 +66,11 @@ progressBar.querySelector('.progress').style.opacity = "0";
             <div class="d-flex align-items-center me-2">
                 <!--begin::Radio-->
                 <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
-                    <input class="form-check-input" type="radio" checked="checked" name="plan" value="startup"/>
+                    <input onclick="alterar_dados()" id="alterar_dados_check" class="form-check-input" type="radio" checked="checked" name="plan" value="startup"/>
                 </div>
                 <!--end::Radio-->
 
-                <!--begin::Info-->
+                <!--begin::Info--> 
                 <div class="flex-grow-1">
                     <h2 class="d-flex align-items-center fs-3 fw-bold flex-wrap">
                         Dados comuns(E-Mail, telefone, endereço, etc.)(Incluir, Alterar ou Excluir)
@@ -90,7 +91,7 @@ progressBar.querySelector('.progress').style.opacity = "0";
             <div class="d-flex align-items-center me-2">
                 <!--begin::Radio-->
                 <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
-                    <input class="form-check-input" type="radio" name="plan" value="advanced"/>
+                    <input onclick="alterar_dados()" id="alterar_proprietario_check" class="form-check-input" type="radio" name="plan" value="advanced"/>
                 </div>
                 <!--end::Radio-->
 
@@ -116,7 +117,7 @@ progressBar.querySelector('.progress').style.opacity = "0";
             <div class="d-flex align-items-center me-2">
                 <!--begin::Radio-->
                 <div class="form-check form-check-custom form-check-solid form-check-primary me-6">
-                    <input class="form-check-input" type="radio" name="plan" value="enterprise"/>
+                    <input onclick="alterar_dados()" id="alterar_inquilino_check" class="form-check-input" type="radio" name="plan" value="enterprise"/>
                 </div>
                 <!--end::Radio-->
 

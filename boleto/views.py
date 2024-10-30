@@ -42,9 +42,7 @@ def boleto_pagamento(request):
         ja_enviou_email_boleto = verifica_se_ja_enviou_boleto_email(request, recibo_pesquisa)
         # Verifica se o usuário ja enviou um e-mail
         if ja_enviou_email_boleto.get('retorno') != False:
-            print(f'1 - {ja_enviou_email_boleto.get('retorno')}')
             lista_ja_enviou_email_boleto = ja_enviou_email_boleto.get('retorno')
-            print(f'Ja enviou email: {lista_ja_enviou_email_boleto}')
 
         # adiciona os boletos na lista
         lista_segunda_via_boleto.append(lista_segunda_via)
@@ -67,24 +65,19 @@ def envia_email_boleto(request):
     if not verificar_sessao_home(request):
         return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
 
-    print('inicio')
     if request.method == 'POST':
         email = request.POST.get('email')
         recibo = request.POST.get('recibo')
         vencto_original = request.POST.get('vencto_original')
 
         nome_chave_sessao_ja_enviou_email = f'ultimo_envio_boleto_{recibo}'
-        print('pos if POST')
         # Verifica se o usuário já enviou um e-mail recentemente
-        print(request.session.get(nome_chave_sessao_ja_enviou_email))
         if nome_chave_sessao_ja_enviou_email in request.session:
-            print('pos if JÁ ENVIOU EMAIL')
             ultimo_envio = datetime.fromisoformat(request.session[nome_chave_sessao_ja_enviou_email])
             tempo_limite = 30 * 60  # 30 minutos em segundos
             tempo_decorrido = (datetime.now() - ultimo_envio).total_seconds()
 
             if tempo_decorrido < tempo_limite:
-                print('pos if TEMPO DECORRIDO')
                 tempo_restante = tempo_limite - tempo_decorrido
                 data = datetime.now().isoformat()
                 response_data = {'retorno': 'Por favor, aguarde {:.0f} minuto(s).'.format(tempo_restante / 60), 'data': data}
@@ -92,8 +85,6 @@ def envia_email_boleto(request):
                 return JsonResponse(response_data)
             else:
                 request.session.pop(nome_chave_sessao_ja_enviou_email)
-            
-        print('apos verificar se email foi enviado ')
 
         if log_id:
             # Atualiza o log com o envio do boleto
@@ -103,8 +94,6 @@ def envia_email_boleto(request):
         else:
             response_data = {'retorno': 'Você precisa fazer o login novamente'}
             return HttpResponse(json.dumps(response_data), content_type='application/json')
-
-        print('apos log atualizado')
 
         # bytes_pdf = base64.b64decode
         bytes_pdf = boleto_pdf(request, recibo)

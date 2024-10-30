@@ -8,10 +8,10 @@ from django.template.loader import render_to_string
 from token_home.models import TokenHome
 from datetime import datetime, timedelta
 from white_list.models import WhiteList
+#from twilio.rest import Client
 
 import random
 import re
-
 
 register = template.Library()
 
@@ -291,3 +291,55 @@ def verificar_sessao_home(request):
         return error(request, 'Para acessar essa página, por favor faça o login clicando no link abaixo.')
     else:
         return True
+
+def send_sms_via_claro(token: str, to_number: str, from_number: str, claro_api_key: str, claro_api_secret: str) -> None:
+    """
+    Envia um SMS via operadora Claro usando a API de SMS da Claro.
+
+    Args:
+        token (str): O token a ser enviado.
+        to_number (str): O número de telefone do destinatário (formato nacional, sem + e código do país).
+        from_number (str): O número de telefone do remetente (número da Claro).
+        claro_api_key (str): A chave de API da Claro.
+        claro_api_secret (str): O segredo de API da Claro.
+    """
+    url = 'https://api.claro.com.br/sms'
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {claro_api_key}',
+        'X-Claro-Api-Secret': claro_api_secret
+    }
+    data = {
+        'mensagem': f'Seu token é: {token}',
+        'numero_destinatario': to_number,
+        'numero_remetente': from_number
+    }
+
+    response = requests.post(url, headers=headers, json=data)
+
+    if response.status_code == 200:
+        print('SMS enviado com sucesso!')
+    else:
+        print('Erro ao enviar SMS:', response.text)
+
+def send_token_by_whatsapp(token: str, to_number: str, from_number: str, account_sid: str, auth_token: str) -> None:
+    pass
+    # """
+    # Envia um token pelo WhatsApp usando a biblioteca Twilio.
+
+    # Args:
+    #     token (str): O token a ser enviado.
+    #     to_number (str): O número de telefone do destinatário (formato internacional, com + e código do país).
+    #     from_number (str): O número de telefone do remetente (número do Twilio).
+    #     account_sid (str): A SID da sua conta Twilio.
+    #     auth_token (str): O token de autenticação da sua conta Twilio.
+    # """
+    # client = Client(account_sid, auth_token)
+
+    # message = client.messages.create(
+    #     body=f'Seu token é: {token}',
+    #     from_=from_number,
+    #     to=to_number
+    # )
+
+    # print(f'Mensagem enviada: {message.sid}')

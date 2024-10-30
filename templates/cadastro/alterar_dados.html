@@ -11,7 +11,6 @@
 				<div class="card-body pt-0"> 
         <!--begin::Section-->
         <div class="pt-12">
-                    <form action="{% url 'teste_km' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="table-responsive">
                         <table class="table gs-7 gy-7 gx-7">
@@ -82,14 +81,13 @@
                      <!--begin::Input group novos dados para alterar-->
                      {% include 'cadastro/novos_alterar_dados.html' %}
                      <!--end::Input group novos dados para alterar-->
-                    <div class="form-floating mb-7">
+                     <div class="form-floating mb-7">
                         <table>
                             <tr>
-                                <td><input class="form-floating mb-7 btn btn-primary hover-elevate-up" type="submit" value="Enviar os dados" /></td>
+                                <td><input class="form-floating mb-7 btn btn-primary hover-elevate-up" type="button"  value="Proximo" onClick="proximaPaginaDados()" /></td>
                             </tr>
                         </table>
                     </div>
-                </form>
                 </div>    
             </div>    
         </div>        
