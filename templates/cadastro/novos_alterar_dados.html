@@ -1,5 +1,4 @@
 <script language="javascript">
-
         // set the dropzone container id
     const id = "#kt_dropzonejs_example_3";
     const dropzone = document.querySelector(id);
@@ -61,9 +60,33 @@
     // Initialize Tagify components on the above inputs
     new Tagify(input);
 </script>
+<script language="javascript">
+    function atualizar_form_proprietario(){
+        $.ajax({
+            url: "/atualizar_form_proprietario/",
+            type: "GET",
+            data: {
+                condominio: $("#condominio").val(),
+                bloco: $("#bloco").val(),
+                unidade: $("#unidade").val()
+            },
+            success: function (data) {
+                alert(data);
+            },
+            error: function(xhr, status, error) {
+            // Aqui você pode tratar erros da requisição
+            alert(error)
+            console.log(error);
+            }
+        });
+    }
+</script>
 <div class="table-responsive" style="width: 550px;">
     <table class="table gs-7 gy-7 gx-7">
-        <h2>O que deseja alterar</h1><br />
+        <h2>O que deseja alterar  - <input type="button" onclick="atualizar_form_proprietario()" value="Carregar dados do Proprietário" /></h2><br />
+        <input type="hidden" name="condominio" id="condominio" value="18" />
+        <input type="hidden" name="bloco" id="bloco" value="0" />
+        <input type="hidden" name="unidade" id="unidade" value="17" />
             
                
                     <!--begin::Input group NOVO EMAIL-->

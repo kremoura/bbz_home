@@ -66,3 +66,7 @@ def cria_sessao_form_passo1(request):
         return JsonResponse({'success': True})
     else:
         return JsonResponse({'success': False})
+
+def alimenta_formulario_proprietario(request):
+    print('POST:')
+     

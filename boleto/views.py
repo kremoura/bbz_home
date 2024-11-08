@@ -90,7 +90,7 @@ def envia_email_boleto(request):
             # Atualiza o log com o envio do boleto
             log_atual = Log.objects.get(id=log_id)
             log_atual.descricao += f' | Envio de boleto por E-Mail - Recibo: {recibo} - Vencto: {vencto_original} - E-Mail: {email} - CNPJ/CPF: {cnpj_cpf}'
-            log_atual.save()
+            log_atual.save() 
         else:
             response_data = {'retorno': 'Você precisa fazer o login novamente'}
             return HttpResponse(json.dumps(response_data), content_type='application/json')

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+import requests
 from apis.views import buscar_emails_chatbot_json, get_unidades_api
 from django import template
 from log.views import criar_log, adicionar_descricao_log

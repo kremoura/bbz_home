@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from zeep import Client
 from zeep.transports import Transport
@@ -318,3 +319,33 @@ def buscar_boletos_unidade(request):
         return lista_recibos
     except Exception as e:
         return f"Erro ao chamar o serviço: {str(e)}" 
+    
+def ficha_cadastral_unidade(request):
+   
+    #client SOAP
+    client = cria_client_soap('adminweb')
+
+    lista_campos_validadores = valida_apis()
+
+    # Dados de entrada
+    condominio = 18
+    bloco = '0'
+    unidade = '17'
+
+    usuario = lista_campos_validadores.get('usuario')  # Substitua pelo seu valor de usuario
+    senha = lista_campos_validadores.get('senha')      # Substitua pelo seu valor de senha
+    chave = lista_campos_validadores.get('chave')      # Substitua pelo seu valor de chave
+
+    print(f'condominio: {type(condominio)}, bloco: {bloco}, unidade: {unidade}, usuario: {usuario}, senha: {senha}, chave: {chave}')
+
+    # Chama a operação do serviço SOAP
+    response = client.service.FichaCadastralUnidade_Json(condominio, bloco, unidade, usuario, senha, chave)
+
+    print(f'Tipo da variável response: {type(response)}')
+
+    print(f'Response: {response}')
+
+    resultado_json =  json.loads(response)
+    
+    print(f'Resultado JSON: {resultado_json}')
+

@@ -46,12 +46,12 @@
 
     function enviaEmail(email, recibo, vencto_original) {
 
-    var csrfToken = getCookie('csrftoken');
-    var button = document.getElementById('envia_boleto');
-    button.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="sr-only">Carregando...</span></div>';
+        var csrfToken = getCookie('csrftoken');
+        var button = document.getElementById('envia_boleto');
+        button.innerHTML = '<div class="spinner-border text-primary" role="status"><span class="sr-only">Carregando...</span></div>';
 
         $.ajax({
-            url: '/envia_email_boleto/',
+            url: '/envia_email_boleto/', 
             type: 'POST',
             headers: {
             'X-CSRFToken': csrfToken

@@ -38,3 +38,7 @@ class dados_cadastrais(models.Model):
     complemento_alteravel = models.CharField(max_length=250, blank=True)
     arquivos = models.FileField(upload_to='arquivos/', blank=True)
     informacoes_adicionais = models.TextField(blank=True)
+    alterado_em = models.DateTimeField(auto_now=True)
+    alteracao_por = models.CharField(max_length=250, blank=True)
+    data_pedido = models.DateTimeField(auto_now_add=True)
+    
